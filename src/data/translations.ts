@@ -1,4 +1,4 @@
-import { Translations } from '../types';
+import { Translations } from "../types";
 
 export const translations: Translations = {
   en: {
@@ -32,7 +32,8 @@ export const translations: Translations = {
     },
     messages: {
       welcome: "Welcome to Gustavo's Terminal Portfolio! 🚀",
-      helpTip: "Type 'help' to see available commands or 'about' to learn more about me.",
+      helpTip:
+        "Type 'help' to see available commands or 'about' to learn more about me.",
       cleared: "Terminal cleared! ✨",
       whoami: "gustavo",
       whoamiDesc: "Full Stack Developer | Linux Enthusiast | Problem Solver",
@@ -53,7 +54,8 @@ export const translations: Translations = {
       closeTab: "But feel free to close the tab if you want to leave!",
       commandHistory: "Command History:",
       downloadingResume: "📥 Downloading {filename}...",
-      resumeSuccess: "Resume downloaded successfully! Check your Downloads folder.",
+      resumeSuccess:
+        "Resume downloaded successfully! Check your Downloads folder.",
       languageSwitched: "Language switched to English! 🇺🇸",
     },
     content: {
@@ -90,8 +92,8 @@ export const translations: Translations = {
           "  • Use Tab for autocomplete",
           "  • Use ↑/↓ arrows for command history",
           "  • Commands are case-sensitive",
-          "  • Type a command and press Enter to execute"
-        ]
+          "  • Type a command and press Enter to execute",
+        ],
       },
       "about-content": {
         title: "👨‍💻 GUSTAVO MUNIZ - Full Stack Developer",
@@ -110,31 +112,35 @@ export const translations: Translations = {
           "  • System Performance",
           "  • Clean Code & Best Practices",
           "  • Continuous Learning",
-          "  • Problem Solving"
-        ]
+          "  • Problem Solving",
+        ],
       },
       "experience-content": {
         title: "💼 WORK EXPERIENCE",
         content: [
           "<span style='color: #00ff00'>Support and Development Analyst</span>",
-          "<span style='color: #61dafb'>City Hall | 2023 - Present</span>",
+          "<span style='color: #61dafb'>Prefeitura de Pau Brasil | 2025 - Present</span>",
           "Allied with development tools (Laravel, Symfony, Golang, C#), I identified structural problems in the city hall, and developed applications to help manage, control and facilitate public management through software! In addition to maintaining servers and workstations.",
           "",
           "<span style='color: #00ff00'>Full Stack Developer</span>",
-          "<span style='color: #61dafb'>Freelance | 2022 - Present</span>",
+          "<span style='color: #61dafb'>WeMind Group | 2024 - 2025</span>",
           "Using technologies like Symfony aligned with Twig, I build systems to help small businesses streamline and centralize their internal processes, simplifying the daily tasks of administrators and consolidating their team data into a single platform.",
           "",
           "<span style='color: #00ff00'>Speaker - Workshops</span>",
-          "<span style='color: #61dafb'>Various Events | 2022 - Present</span>",
-          "Whether the topic is AI, development, infrastructure (infra), or automation, delivering talks on these subjects is a strong suit. These sessions can help internal teams onboard with new technologies and work more agilely, achieving high performance."
-        ]
+          "<span style='color: #61dafb'>Academic Presentations | 2025</span>",
+          "Whether the topic is AI, development, infrastructure (infra), or automation, delivering talks on these subjects is a strong suit. These sessions can help internal teams onboard with new technologies and work more agilely, achieving high performance.",
+        ],
       },
       "education-content": {
         title: "🎓 ACADEMIC EDUCATION",
         content: [
           "<span style='color: #00ff00'>Information Systems</span>",
-          "<span style='color: #61dafb'>Universidade Unopar | 2022 - 2025</span>",
+          "<span style='color: #61dafb'>University of Excellence - UNEX | 2023 - 2027</span>",
           "Focused on system analysis, software development, and project management. Specialized in full-stack development and system architecture.",
+          "",
+          "<span style='color: #00ff00'>Native Mobile Development</span>",
+          "<span style='color: #61dafb'>SENAC | 2020</span>",
+          "Specialized course in native mobile application development for Android and iOS platforms.",
           "",
           "<span style='color: #ffa500'>📚 Continuous Learning:</span>",
           "  • Advanced Linux Administration",
@@ -142,13 +148,7 @@ export const translations: Translations = {
           "  • Modern JavaScript Frameworks",
           "  • System Design & Architecture",
           "  • Database Optimization",
-          "",
-          "<span style='color: #b794f6'>🏆 Certifications & Courses:</span>",
-          "  • Linux Professional Institute (LPI)",
-          "  • AWS Cloud Practitioner",
-          "  • Docker & Kubernetes",
-          "  • React & Node.js Development"
-        ]
+        ],
       },
       "skills-content": {
         title: "⚡ TECHNICAL SKILLS",
@@ -177,8 +177,8 @@ export const translations: Translations = {
           "<span style='color: #b794f6'>Databases:</span>",
           "  • MySQL, PostgreSQL",
           "  • MongoDB, Redis",
-          "  • Database Design & Optimization"
-        ]
+          "  • Database Design & Optimization",
+        ],
       },
       "projects-content": {
         title: "🚀 SIDE PROJECTS",
@@ -198,8 +198,8 @@ export const translations: Translations = {
           "  • System Monitoring Dashboard",
           "  • Developer Productivity Tools",
           "  • Educational Content Platform",
-          "  • Performance Optimization Tools"
-        ]
+          "  • Performance Optimization Tools",
+        ],
       },
       "resume-content": {
         title: "📄 RESUME",
@@ -213,29 +213,27 @@ export const translations: Translations = {
           "  • PDF (Recommended)",
           "  • Online version (this portfolio)",
           "",
-          "<span style='color: #b794f6'>Last updated:</span> December 2024"
-        ]
+          "<span style='color: #b794f6'>Last updated:</span> December 2024",
+        ],
       },
       "contact-content": {
         title: "📞 CONTACT INFORMATION",
         content: [
-          "<span style='color: #00ff00'>📧 Email:</span> contato@gustavomuniz.dev",
-          "<span style='color: #61dafb'>🌐 Website:</span> https://gustavomuniz.dev",
-          "<span style='color: #ffa500'>💼 LinkedIn:</span> https://linkedin.com/in/gustavomuniz",
-          "<span style='color: #b794f6'>🐙 GitHub:</span> https://github.com/gustavomuniz",
+          "<span style='color: #00ff00'>📧 Email:</span> contact@gustavoanjos.com",
+          "<span style='color: #61dafb'>🌐 Website:</span> https://gustavoanjos.com",
+          "<span style='color: #ffa500'>💼 LinkedIn:</span> https://linkedin.com/in/gustavo404",
+          "<span style='color: #b794f6'>🐙 GitHub:</span> https://github.com/guztaver",
+          "<span style='color: #ffff00'>📱 Phone:</span> (73) 981155999",
           "",
-          "<span style='color: #ffff00'>📱 Social Media:</span>",
-          "  • Twitter: @gustavomunizdev",
-          "  • Instagram: @gustavomuniz.dev",
           "",
           "<span style='color: #ff4444'>🚀 Let's Connect!</span>",
           "Feel free to reach out for collaborations, opportunities, or just to say hi!",
           "",
           "<span style='color: #00cc00'>📍 Location:</span> Brazil 🇧🇷",
-          "<span style='color: #00cc00'>⏰ Timezone:</span> UTC-3 (BRT)"
-        ]
-      }
-    }
+          "<span style='color: #00cc00'>⏰ Timezone:</span> UTC-3 (BRT)",
+        ],
+      },
+    },
   },
   pt: {
     commands: {
@@ -280,10 +278,12 @@ export const translations: Translations = {
     },
     messages: {
       welcome: "Bem-vindo ao meu portfólio terminal! 🚀",
-      helpTip: "Digite 'ajuda' para ver os comandos disponíveis ou 'sobre' para saber mais sobre mim.",
+      helpTip:
+        "Digite 'ajuda' para ver os comandos disponíveis ou 'sobre' para saber mais sobre mim.",
       cleared: "Terminal limpo! ✨",
       whoami: "gustavo",
-      whoamiDesc: "Desenvolvedor Full Stack | Entusiasta Linux | Solucionador de Problemas",
+      whoamiDesc:
+        "Desenvolvedor Full Stack | Entusiasta Linux | Solucionador de Problemas",
       sections: "Seções disponíveis:",
       commandNotFound: "Comando não encontrado:",
       helpHint: "Digite 'ajuda' para ver os comandos disponíveis.",
@@ -294,14 +294,16 @@ export const translations: Translations = {
       memory: "Uso de Memória:",
       uptime: "Tempo de sistema:",
       uptimeDesc: "Tempo de desenvolvedor: Vários anos de paixão! 🚀",
-      niceTry: "Boa tentativa! Mas isso é um portfólio, não um terminal real 😄",
+      niceTry:
+        "Boa tentativa! Mas isso é um portfólio, não um terminal real 😄",
       permissions: "Você já tem todas as permissões que precisa aqui!",
       goodbye: "Tchau! Obrigado por visitar meu portfólio! 👋",
       jokingExit: "Brincadeira! Você não pode sair daqui 😉",
       closeTab: "Mas fique à vontade para fechar a aba se quiser sair!",
       commandHistory: "Histórico de Comandos:",
       downloadingResume: "📥 Baixando {filename}...",
-      resumeSuccess: "Currículo baixado com sucesso! Verifique sua pasta de Downloads.",
+      resumeSuccess:
+        "Currículo baixado com sucesso! Verifique sua pasta de Downloads.",
       languageSwitched: "Idioma alterado para Português! 🇧🇷",
     },
     content: {
@@ -338,8 +340,8 @@ export const translations: Translations = {
           "  • Use Tab para autocompletar",
           "  • Use setas ↑/↓ para histórico de comandos",
           "  • Comandos são sensíveis ao caso",
-          "  • Digite um comando e pressione Enter para executar"
-        ]
+          "  • Digite um comando e pressione Enter para executar",
+        ],
       },
       "about-content": {
         title: "👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Full Stack",
@@ -358,45 +360,43 @@ export const translations: Translations = {
           "  • Performance de Sistemas",
           "  • Código Limpo & Boas Práticas",
           "  • Aprendizado Contínuo",
-          "  • Resolução de Problemas"
-        ]
+          "  • Resolução de Problemas",
+        ],
       },
       "experience-content": {
         title: "💼 EXPERIÊNCIA PROFISSIONAL",
         content: [
           "<span style='color: #00ff00'>Analista de Suporte e Desenvolvimento</span>",
-          "<span style='color: #61dafb'>Prefeitura Municipal | 2023 - Presente</span>",
-          "Aliado as ferramentas de desenvolvimento (Laravel, Symfony, Golang, C#), identifiquei problemas estruturais na prefeitura, e desenvolvi aplicativos para ajudar a gerir, controlar e facilitar a gestão pública através de software! Além de dar manutenção em servidores e workstations.",
+          "<span style='color: #61dafb'>Prefeitura de Pau Brasil | 2025 - Atual</span>",
+          "Aliado às ferramentas de desenvolvimento (Laravel, Symfony, Golang, C#), identifiquei problemas estruturais na prefeitura e desenvolvi aplicativos para ajudar a gerir, controlar e facilitar a gestão pública através de software! Além de dar manutenção em servidores e workstations.",
           "",
           "<span style='color: #00ff00'>Desenvolvedor Full Stack</span>",
-          "<span style='color: #61dafb'>Freelance | 2022 - Presente</span>",
+          "<span style='color: #61dafb'>WeMind Group | 2024 - 2025</span>",
           "Com tecnologias como Symfony alinhadas ao Twig, construo sistemas para que empresas pequenas possam agilizar e centralizar os seus processos internos, facilitando a vida dos administradores e centralizando os dados das suas equipes em uma única plataforma.",
           "",
-          "<span style='color: #00ff00'>Palestrante - Workshops</span>",
-          "<span style='color: #61dafb'>Vários Eventos | 2022 - Presente</span>",
-          "Seja o assunto IAs, desenvolvimento, infra ou automação, palestras dessas assuntos são um forte, podendo ajudar equipes internas a se introduzirem com uma nova tecnologia e trabalhar de forma mais ágil e com ótima performance."
-        ]
+          "<span style='color: #00ff00'>Palestrante</span>",
+          "<span style='color: #61dafb'>Diversas Palestras Acadêmicas | 2025</span>",
+          "Seja o assunto IAs, desenvolvimento, infra ou automação, palestras desses assuntos são um forte, podendo ajudar equipes internas a se introduzirem com uma nova tecnologia e trabalhar de forma mais ágil e com ótima performance.",
+        ],
       },
       "education-content": {
         title: "🎓 FORMAÇÃO ACADÊMICA",
         content: [
           "<span style='color: #00ff00'>Sistemas de Informação</span>",
-          "<span style='color: #61dafb'>Universidade Unopar | 2022 - 2025</span>",
+          "<span style='color: #61dafb'>Faculdade de Excelência - UNEX | 2023 - 2027</span>",
           "Focado em análise de sistemas, desenvolvimento de software e gestão de projetos. Especializado em desenvolvimento full-stack e arquitetura de sistemas.",
+          "",
+          "<span style='color: #00ff00'>Desenvolvimento de Aplicativos Mobile - Nativo</span>",
+          "<span style='color: #61dafb'>SENAC | 2020</span>",
+          "Curso especializado em desenvolvimento de aplicativos móveis nativos para plataformas Android e iOS.",
           "",
           "<span style='color: #ffa500'>📚 Aprendizado Contínuo:</span>",
           "  • Administração Avançada de Linux",
-          "  • Computação em Nuvem & DevOps",
+          "  • Computação em Nuvem e DevOps",
           "  • Frameworks JavaScript Modernos",
           "  • Design e Arquitetura de Sistemas",
           "  • Otimização de Banco de Dados",
-          "",
-          "<span style='color: #b794f6'>🏆 Certificações & Cursos:</span>",
-          "  • Linux Professional Institute (LPI)",
-          "  • AWS Cloud Practitioner",
-          "  • Docker & Kubernetes",
-          "  • Desenvolvimento React & Node.js"
-        ]
+        ],
       },
       "skills-content": {
         title: "⚡ HABILIDADES TÉCNICAS",
@@ -425,8 +425,8 @@ export const translations: Translations = {
           "<span style='color: #b794f6'>Bancos de Dados:</span>",
           "  • MySQL, PostgreSQL",
           "  • MongoDB, Redis",
-          "  • Design e Otimização de BD"
-        ]
+          "  • Design e Otimização de BD",
+        ],
       },
       "projects-content": {
         title: "🚀 PROJETOS PESSOAIS",
@@ -446,8 +446,8 @@ export const translations: Translations = {
           "  • Dashboard de Monitoramento de Sistema",
           "  • Ferramentas de Produtividade para Desenvolvedores",
           "  • Plataforma de Conteúdo Educacional",
-          "  • Ferramentas de Otimização de Performance"
-        ]
+          "  • Ferramentas de Otimização de Performance",
+        ],
       },
       "resume-content": {
         title: "📄 CURRÍCULO",
@@ -461,30 +461,28 @@ export const translations: Translations = {
           "  • PDF (Recomendado)",
           "  • Versão online (este portfólio)",
           "",
-          "<span style='color: #b794f6'>Última atualização:</span> Dezembro 2024"
-        ]
+          "<span style='color: #b794f6'>Última atualização:</span> Dezembro 2024",
+        ],
       },
       "contact-content": {
         title: "📞 INFORMAÇÕES DE CONTATO",
         content: [
-          "<span style='color: #00ff00'>📧 E-mail:</span> contato@gustavomuniz.dev",
-          "<span style='color: #61dafb'>🌐 Website:</span> https://gustavomuniz.dev",
-          "<span style='color: #ffa500'>💼 LinkedIn:</span> https://linkedin.com/in/gustavomuniz",
-          "<span style='color: #b794f6'>🐙 GitHub:</span> https://github.com/gustavomuniz",
+          "<span style='color: #00ff00'>📧 Email:</span> contact@gustavoanjos.com",
+          "<span style='color: #61dafb'>🌐 Website:</span> https://gustavoanjos.com",
+          "<span style='color: #ffa500'>💼 LinkedIn:</span> https://linkedin.com/in/gustavo404",
+          "<span style='color: #b794f6'>🐙 GitHub:</span> https://github.com/guztaver",
+          "<span style='color: #ffff00'>📱 Telefone:</span> (73) 981155999",
           "",
-          "<span style='color: #ffff00'>📱 Redes Sociais:</span>",
-          "  • Twitter: @gustavomunizdev",
-          "  • Instagram: @gustavomuniz.dev",
           "",
           "<span style='color: #ff4444'>🚀 Vamos nos Conectar!</span>",
           "Sinta-se à vontade para entrar em contato para colaborações, oportunidades ou apenas para dizer oi!",
           "",
           "<span style='color: #00cc00'>📍 Localização:</span> Brasil 🇧🇷",
-          "<span style='color: #00cc00'>⏰ Fuso Horário:</span> UTC-3 (BRT)"
-        ]
-      }
-    }
-  }
+          "<span style='color: #00cc00'>⏰ Fuso Horário:</span> UTC-3 (BRT)",
+        ],
+      },
+    },
+  },
 };
 
 export const fileList = {
@@ -505,7 +503,7 @@ export const fileList = {
     "projetos.md",
     "curriculo.pdf",
     "contato.txt",
-  ]
+  ],
 };
 
 export const fileMapping = {
@@ -531,5 +529,5 @@ export const fileMapping = {
     "skills.md": "skills-content",
     "projects.md": "projects-content",
     "contact.txt": "contact-content",
-  }
+  },
 };

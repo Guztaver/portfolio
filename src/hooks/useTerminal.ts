@@ -7,6 +7,7 @@ import type {
   UseTerminalReturn,
 } from "../types";
 import { translations, fileList, fileMapping } from "../data/translations";
+import { generateResumePDF } from "../utils/pdfGenerator";
 
 const INITIAL_STATE: TerminalState = {
   currentPath: "~",
@@ -261,6 +262,26 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
   const executeContentCommand = useCallback(
     (contentKey: string): CommandResult => {
       const t = translations[state.currentLanguage];
+
+      // Special handling for resume command - trigger PDF download
+      if (contentKey === "resume-content") {
+        try {
+          generateResumePDF(state.currentLanguage);
+          const filename =
+            state.currentLanguage === "pt"
+              ? "Gustavo_Muniz_Curriculo.pdf"
+              : "Gustavo_Muniz_Resume.pdf";
+          return {
+            output: `${t.messages.downloadingResume.replace("{filename}", filename)}\n${t.messages.resumeSuccess}\n\n${t.content[contentKey].title}\n\n${t.content[contentKey].content.join("\n")}`,
+          };
+        } catch (error) {
+          return {
+            output: `Error generating PDF: ${error instanceof Error ? error.message : "Unknown error"}\n\n${t.content[contentKey].title}\n\n${t.content[contentKey].content.join("\n")}`,
+            isError: true,
+          };
+        }
+      }
+
       const content = t.content[contentKey];
 
       if (!content) {
