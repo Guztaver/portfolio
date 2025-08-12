@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { TerminalInputProps } from "../types";
+import { useMobileKeyboard } from "../hooks/useMobileKeyboard";
 
 export const TerminalInput: React.FC<TerminalInputProps> = ({
   onCommand,
@@ -18,11 +19,28 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const displayRef = useRef<HTMLDivElement>(null);
+  const { isKeyboardOpen, focusInput } = useMobileKeyboard({
+    threshold: 150,
+    debounceMs: 150,
+    enableAutoScroll: true,
+  });
 
   // Focus input on mount and when processing changes
   useEffect(() => {
     if (!isProcessing && inputRef.current) {
-      inputRef.current.focus();
+      // Delay focus slightly on mobile to prevent keyboard flicker
+      const delay =
+        /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        )
+          ? 100
+          : 0;
+
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, delay);
     }
   }, [isProcessing]);
 
@@ -198,16 +216,18 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
     // Use requestAnimationFrame to avoid blocking the click event
     requestAnimationFrame(() => {
       if (inputRef.current) {
-        inputRef.current.focus();
+        focusInput(inputRef.current);
       }
     });
-  }, []);
+  }, [focusInput]);
 
   // Get the prompt string
   const getPrompt = () => `user@portfolio:${currentPath}$`;
 
   return (
-    <div className="terminal-input-container">
+    <div
+      className={`terminal-input-container ${isKeyboardOpen ? "mobile-keyboard-open" : ""}`}
+    >
       <form onSubmit={handleSubmit} className="terminal-input-form">
         <div
           className="terminal-prompt"
@@ -231,12 +251,33 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
           className="terminal-input-hidden"
           disabled={isProcessing}
           autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
           spellCheck={false}
+          inputMode="text"
+          enterKeyHint="go"
           style={{
             position: "absolute",
             left: "-9999px",
             opacity: 0,
             pointerEvents: "none",
+            fontSize: "16px", // Prevent zoom on iOS
+            transform: "scale(0)",
+          }}
+          onFocus={(e) => {
+            // Prevent scroll on focus for mobile
+            e.preventDefault();
+            if (window.scrollTo) {
+              window.scrollTo({ top: 0, behavior: "instant" });
+            }
+          }}
+          onBlur={() => {
+            // Reset scroll position when keyboard closes
+            if (window.scrollTo && isKeyboardOpen) {
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: "instant" });
+              }, 300);
+            }
           }}
         />
       </form>

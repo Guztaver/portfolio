@@ -405,32 +405,39 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
   );
 
   const executeCommand = useCallback(
-    async (command: string) => {
+    async (command: string, skipHistory = false) => {
       if (!command.trim()) return;
 
-      setState((prev) => ({ ...prev, isProcessing: true }));
+      if (!skipHistory) {
+        setState((prev) => ({ ...prev, isProcessing: true }));
 
-      // Add command to display
-      addLine("input", `${getPrompt()} ${command}`, command);
+        // Add command to display
+        addLine("input", `${getPrompt()} ${command}`, command);
+      }
 
       const parts = command.trim().split(" ");
       const cmd = parts[0].toLowerCase();
       const args = parts.slice(1);
       const t = translations[state.currentLanguage];
 
-      // Update command history - use functional update for better performance
-      setState((prev) => {
-        const newHistoryEntry = {
-          command,
-          timestamp: new Date(),
-        };
+      // Update command history only if not skipping
+      if (!skipHistory) {
+        setState((prev) => {
+          const newHistoryEntry = {
+            command,
+            timestamp: new Date(),
+          };
 
-        return {
-          ...prev,
-          commandHistory: [...prev.commandHistory.slice(-99), newHistoryEntry], // Keep last 100 commands
-          historyIndex: -1,
-        };
-      });
+          return {
+            ...prev,
+            commandHistory: [
+              ...prev.commandHistory.slice(-99),
+              newHistoryEntry,
+            ], // Keep last 100 commands
+            historyIndex: -1,
+          };
+        });
+      }
 
       // Defer heavy computation to avoid blocking UI
       const processCommand = async () => {
@@ -461,7 +468,9 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
           addLine("system", t.messages.helpHint);
         }
 
-        setState((prev) => ({ ...prev, isProcessing: false }));
+        if (!skipHistory) {
+          setState((prev) => ({ ...prev, isProcessing: false }));
+        }
       };
 
       // Use requestIdleCallback for better performance, fallback to setTimeout
@@ -504,35 +513,80 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
     [state.commandHistory, state.historyIndex],
   );
 
-  // Initialize with welcome message and auto-execute tree command
+  // Initialize with complete demo sequence
   useEffect(() => {
     if (!initialized.current) {
-      addLine("system", translations["en"].messages.welcome);
-      addLine("system", translations["en"].messages.helpTip);
+      const t = translations[state.currentLanguage];
+      const isPortuguese = state.currentLanguage === "pt";
 
-      // Auto-execute tree command on startup with shorter delay
-      const timer = setTimeout(() => {
-        executeCommand("tree");
-      }, 300);
+      // Demo sequence commands
+      const demoSequence = [
+        {
+          command: isPortuguese ? "arvore" : "tree",
+          delay: 500,
+        },
+        {
+          command: isPortuguese ? "experiencia" : "experience",
+          delay: 2000,
+        },
+        {
+          command: isPortuguese ? "educacao" : "education",
+          delay: 2000,
+        },
+        {
+          command: isPortuguese ? "contato" : "contact",
+          delay: 2000,
+        },
+        {
+          command: isPortuguese ? "arvore" : "tree",
+          delay: 2000,
+        },
+      ];
+
+      // Add welcome messages
+      addLine("system", t.messages.welcome);
+      addLine("system", t.messages.helpTip);
+
+      // Execute demo sequence
+      let currentDelay = 500;
+      demoSequence.forEach((step) => {
+        setTimeout(() => {
+          // Add command input line
+          addLine("input", `${getPrompt()} ${step.command}`, step.command);
+
+          // Execute command and show output
+          setTimeout(() => {
+            executeCommand(step.command, true);
+          }, 300);
+        }, currentDelay);
+
+        currentDelay += step.delay;
+      });
 
       initialized.current = true;
-
-      return () => clearTimeout(timer);
     }
-  }, [addLine, executeCommand]); // Only run once on mount
+  }, [addLine, executeCommand, getPrompt, state.currentLanguage]); // Only run once on mount
 
-  // Handle language change to auto-execute tree command
+  // Handle language change to restart demo sequence
   useEffect(() => {
     if (initialized.current && languageChangeRef.current) {
-      // Auto-execute tree command in new language after language change with shorter delay
-      const timer = setTimeout(() => {
-        executeCommand(state.currentLanguage === "pt" ? "arvore" : "tree");
-        languageChangeRef.current = false;
+      const isPortuguese = state.currentLanguage === "pt";
+
+      // Simplified demo for language change
+      const treeCommand = isPortuguese ? "arvore" : "tree";
+
+      // Add prompt line to show user input
+      setTimeout(() => {
+        addLine("input", `${getPrompt()} ${treeCommand}`, treeCommand);
       }, 200);
 
-      return () => clearTimeout(timer);
+      // Auto-execute tree command in new language after language change
+      setTimeout(() => {
+        executeCommand(treeCommand, true);
+        languageChangeRef.current = false;
+      }, 500);
     }
-  }, [state.currentLanguage, executeCommand]);
+  }, [state.currentLanguage, addLine, executeCommand, getPrompt]);
 
   // Memoize available commands to avoid recalculation
   const availableCommands = useMemo(() => {
