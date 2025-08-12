@@ -29,13 +29,12 @@ export const useTerminal = (): UseTerminalReturn => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const lineIdCounter = useRef(0);
   const initialized = useRef(false);
-
-  const generateLineId = () => `line-${++lineIdCounter.current}`;
+  const languageChangeRef = useRef(false);
 
   const addLine = useCallback(
     (type: TerminalLine["type"], content: string, command?: string) => {
       const newLine: TerminalLine = {
-        id: generateLineId(),
+        id: `line-${++lineIdCounter.current}`,
         type,
         content,
         timestamp: new Date(),
@@ -56,7 +55,14 @@ export const useTerminal = (): UseTerminalReturn => {
     (language: Language) => {
       setState((prev) => ({ ...prev, currentLanguage: language }));
       const t = translations[language];
-      addLine("system", t.messages.languageSwitched);
+
+      // Clear the terminal and show fresh welcome message
+      setLines([]);
+      addLine("system", t.messages.welcome);
+      addLine("system", t.messages.helpTip);
+
+      // Set flag to trigger tree command after language change
+      languageChangeRef.current = true;
     },
     [addLine],
   );
@@ -97,7 +103,7 @@ export const useTerminal = (): UseTerminalReturn => {
           return { output: files.join("  ") };
 
         case "cat":
-        case "ler":
+        case "ler": {
           if (args.length === 0) {
             return {
               output:
@@ -122,17 +128,19 @@ export const useTerminal = (): UseTerminalReturn => {
           return {
             output: `${content.title}\n\n${content.content.join("\n")}`,
           };
+        }
 
         case "echo":
         case "eco":
           return { output: args.join(" ") };
 
         case "history":
-        case "historico":
+        case "historico": {
           const history = state.commandHistory
             .map((cmd, index) => `${index + 1}  ${cmd.command}`)
             .join("\n");
           return { output: `${t.messages.commandHistory}\n${history}` };
+        }
 
         case "neofetch":
           return {
@@ -153,15 +161,38 @@ export const useTerminal = (): UseTerminalReturn => {
           };
 
         case "tree":
-        case "arvore":
-          const treeFiles = fileList[state.currentLanguage];
-          const tree = treeFiles
-            .map((file, index) => {
-              const isLast = index === treeFiles.length - 1;
-              return `${isLast ? "└──" : "├──"} ${file}`;
+        case "arvore": {
+          const commands =
+            state.currentLanguage === "pt"
+              ? [
+                  "ajuda",
+                  "sobre",
+                  "experiencia",
+                  "educacao",
+                  "habilidades",
+                  "projetos",
+                  "curriculo",
+                  "contato",
+                ]
+              : [
+                  "help",
+                  "about",
+                  "experience",
+                  "education",
+                  "skills",
+                  "projects",
+                  "resume",
+                  "contact",
+                ];
+
+          const tree = commands
+            .map((command, index) => {
+              const isLast = index === commands.length - 1;
+              return `${isLast ? "└──" : "├──"} ${command}`;
             })
             .join("\n");
           return { output: `.\n${tree}` };
+        }
 
         case "ps":
         case "processos":
@@ -324,15 +355,95 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
     [state.commandHistory, state.historyIndex],
   );
 
-  // Initialize with welcome message
+  // Initialize with welcome message and auto-execute tree command
   useEffect(() => {
     if (!initialized.current) {
-      const t = translations["en"]; // Use default language for initial message
-      addLine("system", t.messages.welcome);
-      addLine("system", t.messages.helpTip);
+      addLine("system", translations["en"].messages.welcome);
+      addLine("system", translations["en"].messages.helpTip);
+
+      // Auto-execute tree command on startup
+      setTimeout(() => {
+        executeCommand("tree");
+      }, 500);
+
       initialized.current = true;
     }
-  }, [addLine]); // Only run once on mount
+  }, [addLine, executeCommand]); // Only run once on mount
+
+  // Handle language change to auto-execute tree command
+  useEffect(() => {
+    if (initialized.current && languageChangeRef.current) {
+      // Auto-execute tree command in new language after language change
+      const timer = setTimeout(() => {
+        executeCommand(state.currentLanguage === "pt" ? "arvore" : "tree");
+        languageChangeRef.current = false;
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.currentLanguage, executeCommand]);
+
+  // Function to get all available commands for clickable functionality
+  const getAvailableCommands = useCallback(() => {
+    const systemCommands = [
+      "help",
+      "about",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "resume",
+      "contact",
+      "clear",
+      "whoami",
+      "ls",
+      "pwd",
+      "date",
+      "uname",
+      "cat",
+      "echo",
+      "neofetch",
+      "history",
+      "tree",
+      "ps",
+      "top",
+      "free",
+      "uptime",
+      "sudo",
+      "exit",
+      "df",
+    ];
+    const localizedCommands =
+      state.currentLanguage === "pt"
+        ? [
+            "ajuda",
+            "sobre",
+            "experiencia",
+            "educacao",
+            "habilidades",
+            "projetos",
+            "curriculo",
+            "contato",
+            "limpar",
+            "quemSou",
+            "listar",
+            "data",
+            "sistema",
+            "ler",
+            "eco",
+            "historico",
+            "arvore",
+            "processos",
+            "topo",
+            "memoria",
+            "tempo",
+            "sair",
+            "disco",
+          ]
+        : [];
+
+    return [...systemCommands, ...localizedCommands];
+  }, [state.currentLanguage]);
 
   return {
     state,
@@ -341,5 +452,6 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
     clearTerminal,
     changeLanguage,
     navigateHistory,
+    getAvailableCommands,
   };
 };

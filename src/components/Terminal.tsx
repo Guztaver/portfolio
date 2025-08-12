@@ -6,8 +6,14 @@ import { TerminalBody } from "./TerminalBody";
 import { useTerminal } from "../hooks/useTerminal";
 
 export const Terminal: React.FC = () => {
-  const { state, lines, executeCommand, changeLanguage, navigateHistory } =
-    useTerminal();
+  const {
+    state,
+    lines,
+    executeCommand,
+    changeLanguage,
+    navigateHistory,
+    getAvailableCommands,
+  } = useTerminal();
 
   return (
     <div className="terminal">
@@ -22,6 +28,7 @@ export const Terminal: React.FC = () => {
         currentPath={state.currentPath}
         commandHistory={state.commandHistory.map((h) => h.command)}
         onHistoryNavigation={navigateHistory}
+        availableCommands={getAvailableCommands()}
       />
     </div>
   );

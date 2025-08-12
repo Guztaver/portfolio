@@ -667,6 +667,48 @@ body {
     color: var(--terminal-bg);
 }
 
+/* Clickable commands */
+.clickable-command {
+    color: var(--terminal-blue) !important;
+    cursor: pointer !important;
+    text-decoration: underline !important;
+    transition: all 0.2s ease !important;
+    display: inline !important;
+    font-weight: 500 !important;
+    position: relative !important;
+}
+
+.clickable-command:hover {
+    color: var(--terminal-green) !important;
+    text-shadow: 0 0 8px var(--terminal-green) !important;
+    transform: none !important;
+}
+
+.clickable-command:active {
+    color: var(--terminal-yellow) !important;
+    text-shadow: 0 0 10px var(--terminal-yellow) !important;
+}
+
+/* Add a subtle glow effect for clickable commands */
+.clickable-command::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: rgba(97, 218, 251, 0.1);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.clickable-command:hover::before {
+    opacity: 1;
+}
+
 /* Make sure the terminal loads properly */
 .terminal.loaded {
     opacity: 1;

@@ -1,12 +1,90 @@
 "use client";
 
 import React, { forwardRef, useState, useCallback } from "react";
-import { TerminalOutputProps } from "../types";
+import type { TerminalOutputProps } from "../types";
 
 export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
-  ({ lines }, ref) => {
+  ({ lines, onCommand, availableCommands = [] }, ref) => {
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
     const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+
+    // Function to make commands clickable - only in help content and system messages
+    const makeCommandsClickable = useCallback(
+      (content: string, type: string) => {
+        if (!onCommand || !availableCommands.length) {
+          return content;
+        }
+
+        // Only make commands clickable in very specific contexts
+        const shouldMakeClickable =
+          type === "system" ||
+          content.includes("AVAILABLE COMMANDS") ||
+          content.includes("Navigation Commands:") ||
+          content.includes("System Commands:") ||
+          content.includes("Try running:") ||
+          content.includes("Available commands:") ||
+          content.includes("Type 'help'") ||
+          content.includes("run: help") ||
+          content.includes("├──") ||
+          content.includes("└──"); // Tree structure
+
+        if (!shouldMakeClickable) {
+          return content;
+        }
+
+        let processedContent = content;
+
+        // Simple approach: process each command individually
+        availableCommands.forEach((command) => {
+          // Pattern 1: Tree structure (├── command or └── command)
+          const treePattern = new RegExp(
+            `(├──|└──)\\s+(${command})(?=\\s|$)`,
+            "gi",
+          );
+          processedContent = processedContent.replace(
+            treePattern,
+            (match, prefix, cmd) => {
+              return `${prefix} <span class="clickable-command" data-command="${cmd.toLowerCase()}" style="color: #61dafb; cursor: pointer; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='#21a1c4'" onmouseout="this.style.color='#61dafb'">${cmd}</span>`;
+            },
+          );
+
+          // Pattern 2: Help menu format (  command - description)
+          const helpPattern = new RegExp(
+            `(\\s{2,})(${command})(?=\\s+-)`,
+            "gi",
+          );
+          processedContent = processedContent.replace(
+            helpPattern,
+            (match, spaces, cmd) => {
+              return `${spaces}<span class="clickable-command" data-command="${cmd.toLowerCase()}" style="color: #61dafb; cursor: pointer; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='#21a1c4'" onmouseout="this.style.color='#61dafb'">${cmd}</span>`;
+            },
+          );
+        });
+
+        return processedContent;
+      },
+      [onCommand, availableCommands],
+    );
+
+    // Handle clicks on commands
+    const handleContentClick = useCallback(
+      (
+        e:
+          | React.MouseEvent<HTMLDivElement>
+          | React.KeyboardEvent<HTMLDivElement>,
+      ) => {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains("clickable-command")) {
+          const command = target.getAttribute("data-command");
+          if (command && onCommand) {
+            e.preventDefault();
+            e.stopPropagation();
+            onCommand(command);
+          }
+        }
+      },
+      [onCommand],
+    );
     const getLineClassName = (type: string) => {
       switch (type) {
         case "input":
@@ -28,17 +106,23 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
         return <span dangerouslySetInnerHTML={{ __html: content }} />;
       }
 
+      // Make commands clickable in output and system messages
+      const processedContent = makeCommandsClickable(content, type);
+
       // For other lines, handle HTML content and preserve formatting
-      if (content.includes("<span") || content.includes("</span>")) {
-        return <span dangerouslySetInnerHTML={{ __html: content }} />;
+      if (
+        processedContent.includes("<span") ||
+        processedContent.includes("</span>")
+      ) {
+        return <span dangerouslySetInnerHTML={{ __html: processedContent }} />;
       }
 
       // Handle line breaks and preserve whitespace
-      const lines = content.split("\n");
+      const lines = processedContent.split("\n");
       return (
         <>
           {lines.map((line, index) => (
-            <React.Fragment key={index}>
+            <React.Fragment key={`line-${index}-${line}`}>
               {index > 0 && <br />}
               {line}
             </React.Fragment>
@@ -65,7 +149,18 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
           </div>
         )}
 
-        <div className="terminal-output" ref={ref} onScroll={handleScroll}>
+        <div
+          className="terminal-output"
+          ref={ref}
+          onScroll={handleScroll}
+          onClick={handleContentClick}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleContentClick(e);
+            }
+          }}
+          tabIndex={0}
+        >
           {lines.map((line) => (
             <div key={line.id} className={getLineClassName(line.type)}>
               {renderLineContent(line.content, line.type)}
@@ -74,7 +169,8 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
         </div>
 
         {showScrollIndicator && !isScrolledToBottom && (
-          <div
+          <button
+            type="button"
             className="scroll-to-bottom-btn"
             onClick={() => {
               if (ref && "current" in ref && ref.current) {
@@ -84,9 +180,20 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
                 });
               }
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                if (ref && "current" in ref && ref.current) {
+                  ref.current.scrollTo({
+                    top: ref.current.scrollHeight,
+                    behavior: "smooth",
+                  });
+                }
+              }
+            }}
           >
             ⬇ Jump to bottom
-          </div>
+          </button>
         )}
       </div>
     );

@@ -119,6 +119,7 @@ export interface TerminalBodyProps {
   currentPath: string;
   commandHistory: string[];
   onHistoryNavigation: (direction: "up" | "down") => string;
+  availableCommands?: string[];
 }
 
 export interface LanguageSwitcherProps {
@@ -136,6 +137,8 @@ export interface TerminalInputProps {
 
 export interface TerminalOutputProps {
   lines: TerminalLine[];
+  onCommand?: (command: string) => void;
+  availableCommands?: string[];
 }
 
 // Utility types
@@ -161,6 +164,7 @@ export interface UseTerminalReturn {
   clearTerminal: () => void;
   changeLanguage: (language: Language) => void;
   navigateHistory: (direction: "up" | "down") => string;
+  getAvailableCommands: () => string[];
 }
 
 export interface UseTranslationReturn {

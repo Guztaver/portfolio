@@ -13,6 +13,7 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
   currentPath,
   commandHistory,
   onHistoryNavigation,
+  availableCommands,
 }) => {
   const terminalBodyRef = useRef<HTMLDivElement>(null);
   const terminalOutputRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,12 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
       <ASCIIArt />
 
       <div className="terminal-content">
-        <TerminalOutput lines={lines} ref={terminalOutputRef} />
+        <TerminalOutput
+          lines={lines}
+          ref={terminalOutputRef}
+          onCommand={onCommand}
+          availableCommands={availableCommands}
+        />
 
         <TerminalInput
           onCommand={onCommand}
