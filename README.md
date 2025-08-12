@@ -224,4 +224,23 @@ The new TypeScript structure includes:
 - **Real Terminal Feel**: Auto-scrolling, fixed dimensions, keyboard navigation
 - **Enhanced UX**: Scroll indicators, jump-to-bottom button, smooth scrolling
 
+## ☕ Support the Project
+
+If you find this project helpful and want to support its development, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/☕-Buy%20Me%20A%20Coffee-orange.svg?style=flat&logo=buy-me-a-coffee)](https://pixmeacoffee.vercel.app/gustavo)
+
+Your support helps me maintain and improve this project!
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+- 🐛 **Bug Reports**: Found an issue? [Open a bug report](.github/ISSUE_TEMPLATE/bug_report.md)
+- 💡 **Feature Requests**: Have an idea? [Request a feature](.github/ISSUE_TEMPLATE/feature_request.md)
+- ❓ **Questions**: Need help? [Ask a question](.github/ISSUE_TEMPLATE/question.md)
+- 🔒 **Security**: Found a vulnerability? Check our [Security Policy](SECURITY.md)
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+
 *Built with ❤️ using TypeScript and modern web technologies*

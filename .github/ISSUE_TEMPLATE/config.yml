@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/guztaver/portfolio/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📧 Email Support
+    url: https://github.com/guztaver/portfolio/discussions
+    about: For private inquiries or security-related issues
+  - name: 🌐 Portfolio Website
+    url: https://gustavoanjos.com
+    about: Visit the live portfolio website
+  - name: ☕ Support the Project
+    url: https://pixmeacoffee.vercel.app/gustavo
+    about: Buy me a coffee to support the development
+  - name: 📚 Documentation
+    url: https://github.com/guztaver/portfolio/blob/main/README.md
+    about: Read the project documentation and setup guide

@@ -1,0 +1,72 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "guztaver"
+    assignees:
+      - "guztaver"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+    # Group minor and patch updates
+    groups:
+      next-ecosystem:
+        patterns:
+          - "next*"
+          - "@next/*"
+          - "react*"
+          - "@types/react*"
+        update-types:
+          - "minor"
+          - "patch"
+      dev-dependencies:
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "@eslint/*"
+          - "typescript"
+          - "@typescript-eslint/*"
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      build-tools:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "postcss*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "guztaver"
+    assignees:
+      - "guztaver"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "github-actions"
+      - "automated"
