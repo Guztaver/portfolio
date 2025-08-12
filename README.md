@@ -12,6 +12,9 @@ A modern, interactive terminal-style portfolio built with **Next.js 15**, **Type
 - **Terminal Commands** - Comprehensive set of Unix-like commands
 - **Component Architecture** - Modular, reusable React components
 - **Custom Hooks** - Clean state management with custom React hooks
+- **Auto-scrolling Terminal** - Automatically scrolls to bottom like real terminals
+- **Fixed Terminal Size** - Consistent dimensions regardless of content
+- **Keyboard Navigation** - Full keyboard shortcuts for scrolling and navigation
 
 ## 🛠️ Tech Stack
 
@@ -66,6 +69,13 @@ npm start
 - `top` - Show top processes
 - `uptime` - Show system uptime
 
+### Navigation & Scrolling
+- `Page Up/Down` - Scroll through terminal output
+- `Ctrl+Home` - Scroll to top of terminal
+- `Ctrl+End` - Scroll to bottom of terminal
+- `↑/↓ arrows` - Navigate command history
+- `Tab` - Autocomplete commands
+
 ### Portuguese Commands
 All commands have Portuguese equivalents:
 - `ajuda` (help), `sobre` (about), `experiencia` (experience)
@@ -115,6 +125,9 @@ The project uses a custom CSS design that mimics a real terminal:
 3. **State Management**: Custom hooks for clean state handling
 4. **Performance**: Next.js optimizations and code splitting
 5. **SEO**: Proper metadata and social media tags
+6. **Terminal Behavior**: Authentic terminal experience with auto-scrolling
+7. **Fixed Dimensions**: Terminal maintains consistent size (1200x700px on desktop)
+8. **Scroll Management**: Smart scrolling with visual indicators and shortcuts
 
 ### Custom Hooks
 
@@ -208,5 +221,7 @@ The new TypeScript structure includes:
 - **Developer Experience**: Hot reloading, better error messages, IntelliSense
 - **SEO Ready**: Proper metadata and social media tags
 - **Deployment Ready**: Optimized for Vercel, Netlify, and other platforms
+- **Real Terminal Feel**: Auto-scrolling, fixed dimensions, keyboard navigation
+- **Enhanced UX**: Scroll indicators, jump-to-bottom button, smooth scrolling
 
 *Built with ❤️ using TypeScript and modern web technologies*

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { TerminalHeaderProps } from '../types';
+import React from "react";
+import { TerminalHeaderProps } from "../types";
 
 export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   currentLanguage,
@@ -15,21 +15,19 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         <span className="control maximize"></span>
       </div>
 
-      <div className="terminal-title">
-        gustavo@portfolio:~$ terminal
-      </div>
+      <div className="terminal-title">user@portfolio:~$ terminal</div>
 
       <div className="language-switcher">
         <button
-          className={`lang-btn ${currentLanguage === 'en' ? 'active' : ''}`}
-          onClick={() => onLanguageChange('en')}
+          className={`lang-btn ${currentLanguage === "en" ? "active" : ""}`}
+          onClick={() => onLanguageChange("en")}
           aria-label="Switch to English"
         >
           EN
         </button>
         <button
-          className={`lang-btn ${currentLanguage === 'pt' ? 'active' : ''}`}
-          onClick={() => onLanguageChange('pt')}
+          className={`lang-btn ${currentLanguage === "pt" ? "active" : ""}`}
+          onClick={() => onLanguageChange("pt")}
           aria-label="Alternar para Português"
         >
           PT

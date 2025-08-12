@@ -11,6 +11,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
 }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const displayRef = useRef<HTMLDivElement>(null);
 
   // Focus input on mount and when processing changes
   useEffect(() => {
@@ -36,6 +37,11 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (isProcessing) return;
 
+      // Find terminal output for scrolling
+      const terminalOutput = document.querySelector(
+        ".terminal-output",
+      ) as HTMLElement;
+
       switch (e.key) {
         case "ArrowUp":
           e.preventDefault();
@@ -49,6 +55,41 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
           e.preventDefault();
           const downCommand = onHistoryNavigation("down");
           setInput(downCommand);
+          break;
+
+        case "PageUp":
+          e.preventDefault();
+          if (terminalOutput) {
+            terminalOutput.scrollBy(0, -terminalOutput.clientHeight * 0.8);
+          }
+          break;
+
+        case "PageDown":
+          e.preventDefault();
+          if (terminalOutput) {
+            terminalOutput.scrollBy(0, terminalOutput.clientHeight * 0.8);
+          }
+          break;
+
+        case "Home":
+          if (e.ctrlKey) {
+            e.preventDefault();
+            if (terminalOutput) {
+              terminalOutput.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }
+          break;
+
+        case "End":
+          if (e.ctrlKey) {
+            e.preventDefault();
+            if (terminalOutput) {
+              terminalOutput.scrollTo({
+                top: terminalOutput.scrollHeight,
+                behavior: "smooth",
+              });
+            }
+          }
           break;
 
         case "Tab":
@@ -117,33 +158,49 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
     [],
   );
 
+  // Handle clicks on the display area to focus hidden input
+  const handleDisplayClick = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   // Get the prompt string
-  const getPrompt = () => `gustavo@portfolio:${currentPath}$`;
+  const getPrompt = () => `user@portfolio:${currentPath}$`;
 
   return (
     <div className="terminal-input-container">
       <form onSubmit={handleSubmit} className="terminal-input-form">
-        <div className="terminal-prompt">
+        <div
+          className="terminal-prompt"
+          onClick={handleDisplayClick}
+          ref={displayRef}
+        >
           <span className="prompt-text">{getPrompt()}</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="terminal-input"
-            disabled={isProcessing}
-            autoComplete="off"
-            spellCheck={false}
-            placeholder={isProcessing ? "Processing..." : ""}
-          />
-          {isProcessing && (
-            <span className="processing-indicator">
-              <span className="cursor-blink">_</span>
-            </span>
-          )}
-          {!isProcessing && <span className="cursor">_</span>}
+          <span className="input-display">
+            <span className="input-text">{input}</span>
+            {isProcessing && <span className="cursor-blink">_</span>}
+            {!isProcessing && <span className="cursor">_</span>}
+          </span>
         </div>
+
+        <input
+          ref={inputRef}
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          className="terminal-input-hidden"
+          disabled={isProcessing}
+          autoComplete="off"
+          spellCheck={false}
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+        />
       </form>
     </div>
   );

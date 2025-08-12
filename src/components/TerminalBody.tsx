@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useRef, useEffect } from 'react';
-import { TerminalBodyProps } from '../types';
-import { TerminalOutput } from './TerminalOutput';
-import { TerminalInput } from './TerminalInput';
-import { ASCIIArt } from './ASCIIArt';
+import React, { useRef, useEffect } from "react";
+import { TerminalBodyProps } from "../types";
+import { TerminalOutput } from "./TerminalOutput";
+import { TerminalInput } from "./TerminalInput";
+import { ASCIIArt } from "./ASCIIArt";
 
 export const TerminalBody: React.FC<TerminalBodyProps> = ({
   lines,
@@ -15,11 +15,22 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
   onHistoryNavigation,
 }) => {
   const terminalBodyRef = useRef<HTMLDivElement>(null);
+  const terminalOutputRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when new lines are added
+  // Auto-scroll to bottom when new lines are added with smooth animation
   useEffect(() => {
-    if (terminalBodyRef.current) {
-      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    if (terminalOutputRef.current) {
+      // Small delay to ensure DOM is updated
+      const scrollTimeout = setTimeout(() => {
+        if (terminalOutputRef.current) {
+          terminalOutputRef.current.scrollTo({
+            top: terminalOutputRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      }, 10);
+
+      return () => clearTimeout(scrollTimeout);
     }
   }, [lines]);
 
@@ -28,7 +39,7 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
       <ASCIIArt />
 
       <div className="terminal-content">
-        <TerminalOutput lines={lines} />
+        <TerminalOutput lines={lines} ref={terminalOutputRef} />
 
         <TerminalInput
           onCommand={onCommand}
