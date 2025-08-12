@@ -32,7 +32,7 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
         // Create a cache key
         const cacheKey = `${type}:${content}`;
         if (processedContentCache.has(cacheKey)) {
-          return processedContentCache.get(cacheKey)!;
+          return processedContentCache.get(cacheKey) || content;
         }
 
         // Only make commands clickable in very specific contexts
@@ -56,7 +56,7 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
         let processedContent = content;
 
         // Use pre-compiled patterns
-        commandPatterns.forEach(({ command, treePattern, helpPattern }) => {
+        commandPatterns.forEach(({ treePattern, helpPattern }) => {
           // Reset regex lastIndex to avoid state issues
           treePattern.lastIndex = 0;
           helpPattern.lastIndex = 0;
@@ -64,7 +64,7 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
           // Pattern 1: Tree structure (├── command or └── command)
           processedContent = processedContent.replace(
             treePattern,
-            (match, prefix, cmd) => {
+            (_match, prefix, cmd) => {
               return `${prefix} <span class="clickable-command" data-command="${cmd.toLowerCase()}">${cmd}</span>`;
             },
           );
@@ -72,7 +72,7 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
           // Pattern 2: Help menu format (  command - description)
           processedContent = processedContent.replace(
             helpPattern,
-            (match, spaces, cmd) => {
+            (_match, spaces, cmd) => {
               return `${spaces}<span class="clickable-command" data-command="${cmd.toLowerCase()}">${cmd}</span>`;
             },
           );
@@ -105,7 +105,7 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
       },
       [onCommand],
     );
-    const getLineClassName = (type: string) => {
+    const getLineClassName = useCallback((type: string) => {
       switch (type) {
         case "input":
           return "terminal-line terminal-input-line";
@@ -118,26 +118,73 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
         default:
           return "terminal-line";
       }
-    };
+    }, []);
 
     // Memoize line content rendering to avoid re-processing unchanged content
     const renderLineContent = useCallback(
       (content: string, type: string) => {
         if (type === "input") {
-          // For input lines, we want to preserve the prompt formatting
-          return <span dangerouslySetInnerHTML={{ __html: content }} />;
+          // For input lines, preserve prompt formatting but avoid dangerouslySetInnerHTML
+          // Parse content manually for safety
+          const parts = content.split(/(<[^>]*>)/);
+          return (
+            <span>
+              {parts.map((part, idx) => {
+                if (part.startsWith("<") && part.endsWith(">")) {
+                  // Simple span handling for known safe content
+                  if (
+                    part.includes('class="prompt-text"') ||
+                    part.includes('class="input-text"')
+                  ) {
+                    return (
+                      <span
+                        key={`prompt-${idx}-${part.slice(0, 10)}`}
+                        className={part.match(/class="([^"]*)"/)?.[1] || ""}
+                      >
+                        {}
+                      </span>
+                    );
+                  }
+                  return null;
+                }
+                return part;
+              })}
+            </span>
+          );
         }
 
         // Make commands clickable in output and system messages
         const processedContent = makeCommandsClickable(content, type);
 
-        // For other lines, handle HTML content and preserve formatting
+        // For other lines, handle HTML content safely
         if (
           processedContent.includes("<span") ||
           processedContent.includes("</span>")
         ) {
+          // Parse and render spans safely
+          const parts = processedContent.split(/(<span[^>]*>.*?<\/span>)/);
           return (
-            <span dangerouslySetInnerHTML={{ __html: processedContent }} />
+            <span>
+              {parts.map((part, idx) => {
+                if (part.includes('class="clickable-command"')) {
+                  const match = part.match(
+                    /data-command="([^"]*)".*?>(.*?)<\/span>/,
+                  );
+                  if (match) {
+                    return (
+                      <span
+                        key={`command-${idx}-${match[1]}`}
+                        className="clickable-command"
+                        data-command={match[1]}
+                      >
+                        {match[2]}
+                      </span>
+                    );
+                  }
+                }
+                return part.replace(/<\/?span[^>]*>/g, "");
+              })}
+            </span>
           );
         }
 
@@ -188,7 +235,8 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
               handleContentClick(e);
             }
           }}
-          tabIndex={0}
+          role="log"
+          aria-label="Terminal output"
         >
           {lines.map((line) => {
             // Memoize individual line rendering

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { TerminalHeader } from "./TerminalHeader";
 import { TerminalBody } from "./TerminalBody";
 import { useTerminal } from "../hooks/useTerminal";

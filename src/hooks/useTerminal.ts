@@ -155,7 +155,9 @@ export const useTerminal = (): UseTerminalReturn => {
         nonDynamicCommands.has(command) &&
         commandCache.current.has(cacheKey)
       ) {
-        return commandCache.current.get(cacheKey)!;
+        return (
+          commandCache.current.get(cacheKey) || { output: "", isError: true }
+        );
       }
 
       let result: CommandResult;
@@ -183,9 +185,10 @@ export const useTerminal = (): UseTerminalReturn => {
           };
 
         case "ls":
-        case "listar":
+        case "listar": {
           const files = fileList[state.currentLanguage];
           return { output: files.join("  ") };
+        }
 
         case "cat":
         case "ler": {
@@ -362,7 +365,9 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
         contentKey !== "resume-content" &&
         commandCache.current.has(cacheKey)
       ) {
-        return commandCache.current.get(cacheKey)!;
+        return (
+          commandCache.current.get(cacheKey) || { output: "", isError: true }
+        );
       }
 
       let result: CommandResult;
@@ -445,7 +450,7 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
 
         // Check if it's a content command
         const commandMapping = t.commands[cmd];
-        if (commandMapping && commandMapping.endsWith("-content")) {
+        if (commandMapping?.endsWith("-content")) {
           result = executeContentCommand(commandMapping);
         } else if (systemCommands.has(cmd)) {
           // System command

@@ -991,7 +991,7 @@ body {
 }
 
 /* Android specific fixes */
-@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1) {
+@media screen and (max-width: 768px) and (min-resolution: 96dpi) {
     /* Android Chrome viewport fix */
     body {
         min-height: calc(var(--vh, 1vh) * 100);

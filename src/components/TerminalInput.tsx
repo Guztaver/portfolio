@@ -1,13 +1,8 @@
 "use client";
 
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import { TerminalInputProps } from "../types";
+import type React from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import type { TerminalInputProps } from "../types";
 import { useMobileKeyboard } from "../hooks/useMobileKeyboard";
 
 export const TerminalInput: React.FC<TerminalInputProps> = ({
@@ -18,7 +13,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
 }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const displayRef = useRef<HTMLDivElement>(null);
+  const displayRef = useRef<HTMLButtonElement>(null);
   const { isKeyboardOpen, focusInput } = useMobileKeyboard({
     threshold: 150,
     debounceMs: 150,
@@ -94,19 +89,21 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
       };
 
       switch (e.key) {
-        case "ArrowUp":
+        case "ArrowUp": {
           e.preventDefault();
           const upCommand = onHistoryNavigation("up");
           if (upCommand !== "") {
             setInput(upCommand);
           }
           break;
+        }
 
-        case "ArrowDown":
+        case "ArrowDown": {
           e.preventDefault();
           const downCommand = onHistoryNavigation("down");
           setInput(downCommand);
           break;
+        }
 
         case "PageUp":
           e.preventDefault();
@@ -163,7 +160,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
           }
           break;
 
-        case "Tab":
+        case "Tab": {
           e.preventDefault();
           // Optimized autocomplete with memoized commands
           const currentInput = input.toLowerCase();
@@ -192,6 +189,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
             }
           }
           break;
+        }
 
         case "Escape":
           setInput("");
@@ -229,9 +227,11 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
       className={`terminal-input-container ${isKeyboardOpen ? "mobile-keyboard-open" : ""}`}
     >
       <form onSubmit={handleSubmit} className="terminal-input-form">
-        <div
+        <button
+          type="button"
           className="terminal-prompt"
           onClick={handleDisplayClick}
+          aria-label="Terminal input area - click to focus"
           ref={displayRef}
         >
           <span className="prompt-text">{getPrompt()}</span>
@@ -240,7 +240,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
             {isProcessing && <span className="cursor-blink">_</span>}
             {!isProcessing && <span className="cursor">_</span>}
           </span>
-        </div>
+        </button>
 
         <input
           ref={inputRef}

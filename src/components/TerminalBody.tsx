@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { TerminalBodyProps } from "../types";
+import type React from "react";
+import { useRef, useEffect } from "react";
+import type { TerminalBodyProps } from "../types";
 import { TerminalOutput } from "./TerminalOutput";
 import { TerminalInput } from "./TerminalInput";
 import { ASCIIArt } from "./ASCIIArt";
@@ -19,6 +20,7 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
   const terminalOutputRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new lines are added with smooth animation
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- We specifically want to trigger on lines.length changes
   useEffect(() => {
     if (terminalOutputRef.current) {
       // Small delay to ensure DOM is updated
@@ -33,7 +35,7 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
 
       return () => clearTimeout(scrollTimeout);
     }
-  }, [lines]);
+  }, [lines.length]);
 
   return (
     <div className="terminal-body" ref={terminalBodyRef}>
