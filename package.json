@@ -1,0 +1,48 @@
+{
+  "name": "gustavo-muniz-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive terminal-style portfolio built with Next.js and TypeScript",
+  "author": "Gustavo Muniz <contato@gustavomuniz.dev>",
+  "homepage": "https://gustavomuniz.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gustavomuniz/portfolio"
+  },
+  "keywords": [
+    "portfolio",
+    "terminal",
+    "nextjs",
+    "typescript",
+    "react",
+    "developer"
+  ],
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:standard": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "preview": "npm run build && npm run start",
+    "clean": "rm -rf .next node_modules/.cache",
+    "export": "next build && next export"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.4.6"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.6",
+    "@eslint/eslintrc": "^3"
+  }
+}
