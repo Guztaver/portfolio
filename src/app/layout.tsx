@@ -4,10 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Gustavo Muniz - Terminal Portfolio",
   description:
-    "Full Stack Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio showcasing skills, experience, and projects",
+    "Backend Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio showcasing skills, experience, and projects",
   keywords: [
     "Gustavo Muniz",
-    "Full Stack Developer",
+    "Backend Developer",
     "Portfolio",
     "Terminal",
     "Linux",
@@ -17,16 +17,16 @@ export const metadata: Metadata = {
     "Web Developer",
     "Software Engineer",
   ],
-  authors: [{ name: "Gustavo Muniz", url: "https://gustavomuniz.dev" }],
+  authors: [{ name: "Gustavo Muniz", url: "https://gustavoanjos.com" }],
   creator: "Gustavo Muniz",
   publisher: "Gustavo Muniz",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://gustavomuniz.dev",
+    url: "https://gustavoanjos.com",
     title: "Gustavo Muniz - Terminal Portfolio",
     description:
-      "Full Stack Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio",
+      "Backend Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio",
     siteName: "Gustavo Muniz Portfolio",
     images: [
       {
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gustavo Muniz - Terminal Portfolio",
-    description: "Full Stack Developer | Linux Enthusiast | Problem Solver",
-    creator: "@gustavomunizdev",
+    description: "Backend Developer | Linux Enthusiast | Problem Solver",
+    creator: "@gustavo404",
     images: ["/og-image.png"],
   },
   robots: {
@@ -59,11 +59,15 @@ export const metadata: Metadata = {
     google: "your-google-verification-code",
   },
   alternates: {
-    canonical: "https://gustavomuniz.dev",
+    canonical: "https://gustavoanjos.com",
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/icon.svg",
+    shortcut: "/favicon.ico",
   },
 };
 

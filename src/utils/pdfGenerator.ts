@@ -23,12 +23,19 @@ interface ResumeData {
     institution: string;
     period: string;
   }>;
+  projects: Array<{
+    name: string;
+    description: string;
+    technologies: string;
+    impact: string;
+    link?: string;
+  }>;
 }
 
 const resumeData: Record<Language, ResumeData> = {
   en: {
     name: "GUSTAVO MUNIZ",
-    title: "Full Stack Developer",
+    title: "Backend Developer",
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
@@ -73,10 +80,22 @@ const resumeData: Record<Language, ResumeData> = {
         period: "2020 - 2020",
       },
     ],
+    projects: [
+      {
+        name: "Municipal Fuel Management System",
+        description:
+          "Complete fuel management system for public fleets built with Laravel. Features fuel control with mandatory authorization, real-time analytics dashboard, vehicle management with MERCOSUL validation, role-based access control (Admin, Manager, Operator), detailed reports with CSV export, and cost control with full transparency.",
+        technologies:
+          "Laravel 12, Laravel Breeze, Tailwind CSS, Alpine.js, Chart.js, SQLite/MySQL",
+        impact:
+          "Increased transparency in public spending, strict fuel control, and cost optimization for municipal governments.",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7356710729246224384/",
+      },
+    ],
   },
   pt: {
     name: "GUSTAVO MUNIZ",
-    title: "Programador Full Stack",
+    title: "Desenvolvedor Backend",
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
@@ -119,6 +138,18 @@ const resumeData: Record<Language, ResumeData> = {
         degree: "Desenvolvimento de Aplicativos Mobile - Nativo",
         institution: "SENAC",
         period: "2020 - 2020",
+      },
+    ],
+    projects: [
+      {
+        name: "Sistema de Gerenciamento de Combustível Municipal",
+        description:
+          "Sistema completo de gerenciamento de combustível para frotas públicas desenvolvido em Laravel. Oferece controle total de abastecimentos com autorização obrigatória, dashboard analytics com gráficos em tempo real, gestão de veículos com validação MERCOSUL, sistema de roles (Admin, Gerente, Operador), relatórios detalhados e exportação CSV, e controle de custos com transparência total.",
+        technologies:
+          "Laravel 12, Laravel Breeze, Tailwind CSS, Alpine.js, Chart.js, SQLite/MySQL",
+        impact:
+          "Maior transparência nos gastos públicos, controle rigoroso de combustível e otimização de custos para prefeituras.",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7356710729246224384/",
       },
     ],
   },
@@ -265,6 +296,68 @@ export const generateResumePDF = (language: Language): void => {
     doc.text(edu.institution, 20, yPos + 12);
 
     yPos += 20;
+  });
+
+  // Projects Section
+  const projectsTitle = language === "pt" ? "PROJETOS" : "KEY PROJECTS";
+
+  // Check if we need a new page
+  if (yPos > 200) {
+    doc.addPage();
+    yPos = 20;
+  }
+
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(52, 152, 219); // accentColor
+  doc.text(projectsTitle, 20, yPos);
+  yPos += 10;
+
+  data.projects.forEach((project) => {
+    // Check if we need a new page
+    if (yPos > 220) {
+      doc.addPage();
+      yPos = 20;
+    }
+
+    // Project Name
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(44, 62, 80); // primaryColor
+    doc.text(project.name, 20, yPos);
+    yPos += 8;
+
+    // Description
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(52, 73, 94); // textColor
+    const descLines = doc.splitTextToSize(project.description, 170);
+    doc.text(descLines, 20, yPos);
+    yPos += descLines.length * 5 + 5;
+
+    // Technologies
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(52, 152, 219); // accentColor
+    const techLabel = language === "pt" ? "Tecnologias: " : "Technologies: ";
+    doc.text(techLabel, 20, yPos);
+    yPos += 6;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(52, 73, 94); // textColor
+    const techLines = doc.splitTextToSize(project.technologies, 170);
+    doc.text(techLines, 20, yPos);
+    yPos += techLines.length * 5 + 5;
+
+    // Impact
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(52, 152, 219); // accentColor
+    const impactLabel = language === "pt" ? "Impacto: " : "Impact: ";
+    doc.text(impactLabel, 20, yPos);
+    yPos += 6;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(52, 73, 94); // textColor
+    const impactLines = doc.splitTextToSize(project.impact, 170);
+    doc.text(impactLines, 20, yPos);
+    yPos += impactLines.length * 5 + 15;
   });
 
   // Download the PDF

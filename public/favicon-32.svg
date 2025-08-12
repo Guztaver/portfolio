@@ -1,0 +1,34 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#0c0c0c" rx="2"/>
+
+  <!-- Terminal window -->
+  <rect x="2" y="2" width="28" height="28" rx="3" fill="#1a1a1a" stroke="#00ff00" stroke-width="0.5"/>
+
+  <!-- Terminal header -->
+  <rect x="2" y="2" width="28" height="6" rx="3" fill="#2d2d2d"/>
+
+  <!-- Terminal dots -->
+  <circle cx="5" cy="5" r="1" fill="#ff5f56"/>
+  <circle cx="8" cy="5" r="1" fill="#ffbd2e"/>
+  <circle cx="11" cy="5" r="1" fill="#27ca3f"/>
+
+  <!-- Terminal content area -->
+  <rect x="3" y="9" width="26" height="20" fill="#0f1419"/>
+
+  <!-- Terminal prompt -->
+  <text x="4" y="15" fill="#00ff00" font-family="monospace" font-size="3" font-weight="bold">$</text>
+
+  <!-- Command -->
+  <text x="4" y="20" fill="#61dafb" font-family="monospace" font-size="2.5">whoami</text>
+
+  <!-- Output -->
+  <text x="4" y="24" fill="#cccccc" font-family="monospace" font-size="2">gustavo</text>
+
+  <!-- New prompt with cursor -->
+  <text x="4" y="28" fill="#00ff00" font-family="monospace" font-size="3" font-weight="bold">$</text>
+  <rect x="8" y="26.5" width="1" height="2.5" fill="#00ff00"/>
+
+  <!-- Subtle glow effect -->
+  <rect x="2" y="2" width="28" height="28" rx="3" fill="none" stroke="#00ff00" stroke-width="0.3" opacity="0.6"/>
+</svg>

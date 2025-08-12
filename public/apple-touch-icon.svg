@@ -1,0 +1,82 @@
+<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Terminal glow effect -->
+    <filter id="appleGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Screen gradient -->
+    <radialGradient id="appleScreenGradient" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#0f1419;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+
+  <!-- Rounded background for iOS -->
+  <rect width="180" height="180" rx="40" fill="#0c0c0c"/>
+
+  <!-- Terminal window -->
+  <rect x="20" y="30" width="140" height="120" rx="8"
+        fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+
+  <!-- Terminal screen -->
+  <rect x="24" y="44" width="132" height="100" rx="4"
+        fill="url(#appleScreenGradient)"/>
+
+  <!-- Terminal header -->
+  <rect x="24" y="34" width="132" height="16" rx="4"
+        fill="#2d2d2d"/>
+
+  <!-- Terminal controls -->
+  <circle cx="32" cy="42" r="3" fill="#ff5f56"/>
+  <circle cx="44" cy="42" r="3" fill="#ffbd2e"/>
+  <circle cx="56" cy="42" r="3" fill="#27ca3f"/>
+
+  <!-- Terminal title -->
+  <text x="90" y="45" text-anchor="middle" fill="#888"
+        font-family="monospace" font-size="6" font-weight="bold">user@portfolio</text>
+
+  <!-- Terminal content -->
+  <text x="30" y="62" fill="#00ff00"
+        font-family="monospace" font-size="8" font-weight="bold">$</text>
+  <text x="40" y="62" fill="#61dafb"
+        font-family="monospace" font-size="8">whoami</text>
+
+  <text x="30" y="76" fill="#cccccc"
+        font-family="monospace" font-size="7">gustavo</text>
+  <text x="30" y="88" fill="#888"
+        font-family="monospace" font-size="6">Backend Developer</text>
+
+  <!-- Second prompt -->
+  <text x="30" y="104" fill="#00ff00"
+        font-family="monospace" font-size="8" font-weight="bold">$</text>
+  <text x="40" y="104" fill="#61dafb"
+        font-family="monospace" font-size="8">tree</text>
+
+  <!-- Tree structure -->
+  <text x="30" y="118" fill="#cccccc"
+        font-family="monospace" font-size="6">.</text>
+  <text x="30" y="130" fill="#cccccc"
+        font-family="monospace" font-size="6">├── about</text>
+  <text x="30" y="140" fill="#cccccc"
+        font-family="monospace" font-size="6">└── projects</text>
+
+  <!-- Blinking cursor -->
+  <rect x="88" y="98" width="3" height="8" fill="#00ff00" opacity="1">
+    <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Terminal glow -->
+  <rect x="24" y="44" width="132" height="100" rx="4"
+        fill="none" stroke="#00ff00" stroke-width="0.8" opacity="0.4" filter="url(#appleGlow)"/>
+
+  <!-- Decorative code brackets -->
+  <text x="10" y="80" fill="#00ff00"
+        font-family="monospace" font-size="20" font-weight="bold" opacity="0.15">{</text>
+  <text x="155" y="120" fill="#00ff00"
+        font-family="monospace" font-size="20" font-weight="bold" opacity="0.15">}</text>
+</svg>

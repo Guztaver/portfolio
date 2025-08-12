@@ -36,7 +36,7 @@ export const translations: Translations = {
         "Type 'help' to see available commands or 'about' to learn more about me.",
       cleared: "Terminal cleared! ✨",
       whoami: "gustavo",
-      whoamiDesc: "Full Stack Developer | Linux Enthusiast | Problem Solver",
+      whoamiDesc: "Backend Developer | Linux Enthusiast | Problem Solver",
       sections: "Available sections:",
       commandNotFound: "Command not found:",
       helpHint: "Type 'help' to see available commands.",
@@ -96,7 +96,7 @@ export const translations: Translations = {
         ],
       },
       "about-content": {
-        title: "👨‍💻 GUSTAVO MUNIZ - Full Stack Developer",
+        title: "👨‍💻 GUSTAVO MUNIZ - Backend Developer",
         content: [
           "With agility and performance in mind, I always aim to create systems that are not only highly efficient but also make life easier for the users who rely on them. With professional experience & years of study, I can swiftly identify errors and resolve them in short timeframes, contributing to the company's growth! I am also a passionate enthusiast of the Linux world!",
           "",
@@ -204,16 +204,16 @@ export const translations: Translations = {
       "resume-content": {
         title: "📄 RESUME",
         content: [
-          "Download my resume in PDF format:",
+          "Professional resume with complete work experience and education details.",
           "",
-          "<span style='color: #00ff00'>📥 Download English Resume</span>",
-          "<span style='color: #61dafb'>📥 Download Portuguese Resume</span>",
+          "<span style='color: #00ff00'>✨ Features:</span>",
+          "  • Complete work experience",
+          "  • Academic background",
+          "  • Contact information",
+          "  • Professional profile",
+          "  • Key projects and achievements",
           "",
-          "<span style='color: #ffa500'>Available formats:</span>",
-          "  • PDF (Recommended)",
-          "  • Online version (this portfolio)",
-          "",
-          "<span style='color: #b794f6'>Last updated:</span> December 2024",
+          "<span style='color: #b794f6'>Last updated:</span> July 2025",
         ],
       },
       "contact-content": {
@@ -283,7 +283,7 @@ export const translations: Translations = {
       cleared: "Terminal limpo! ✨",
       whoami: "gustavo",
       whoamiDesc:
-        "Desenvolvedor Full Stack | Entusiasta Linux | Solucionador de Problemas",
+        "Desenvolvedor Backend | Entusiasta Linux | Solucionador de Problemas",
       sections: "Seções disponíveis:",
       commandNotFound: "Comando não encontrado:",
       helpHint: "Digite 'ajuda' para ver os comandos disponíveis.",
@@ -344,7 +344,7 @@ export const translations: Translations = {
         ],
       },
       "about-content": {
-        title: "👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Full Stack",
+        title: "👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Backend",
         content: [
           "Com agilidade e performance em mente, almejo sempre criar sistemas que, além de muito ágeis, facilitam a vida dos usuários que utilizam eles. Com experiência profissional & anos de estudo, posso identificar erros com agilidade e resolver-los em tempos curtos, que podem ajudar no crescimento da empresa! E um entusiasta do mundo Linux!",
           "",
@@ -452,16 +452,16 @@ export const translations: Translations = {
       "resume-content": {
         title: "📄 CURRÍCULO",
         content: [
-          "Baixe meu currículo em formato PDF:",
+          "Currículo profissional com experiência completa de trabalho e detalhes educacionais.",
           "",
-          "<span style='color: #00ff00'>📥 Baixar Currículo em Inglês</span>",
-          "<span style='color: #61dafb'>📥 Baixar Currículo em Português</span>",
+          "<span style='color: #00ff00'>✨ Características:</span>",
+          "  • Experiência profissional completa",
+          "  • Formação acadêmica",
+          "  • Informações de contato",
+          "  • Perfil profissional",
+          "  • Principais projetos e conquistas",
           "",
-          "<span style='color: #ffa500'>Formatos disponíveis:</span>",
-          "  • PDF (Recomendado)",
-          "  • Versão online (este portfólio)",
-          "",
-          "<span style='color: #b794f6'>Última atualização:</span> Dezembro 2024",
+          "<span style='color: #b794f6'>Última atualização:</span> Julho 2025",
         ],
       },
       "contact-content": {

@@ -1,0 +1,42 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="32" height="32" rx="4" fill="#0c0c0c"/>
+
+  <!-- Terminal window -->
+  <rect x="2" y="4" width="28" height="24" rx="2" fill="#1e1e1e" stroke="#333" stroke-width="0.5"/>
+
+  <!-- Terminal header -->
+  <rect x="2" y="4" width="28" height="5" rx="2" fill="#2d2d2d"/>
+
+  <!-- Terminal controls -->
+  <circle cx="5" cy="6.5" r="1" fill="#ff5f56"/>
+  <circle cx="7.5" cy="6.5" r="1" fill="#ffbd2e"/>
+  <circle cx="10" cy="6.5" r="1" fill="#27ca3f"/>
+
+  <!-- Terminal content -->
+  <text x="4" y="16" fill="#00ff00" font-family="monospace" font-size="4" font-weight="bold">$</text>
+  <text x="7" y="16" fill="#61dafb" font-family="monospace" font-size="4">whoami</text>
+
+  <text x="4" y="21" fill="#cccccc" font-family="monospace" font-size="3.5">gustavo</text>
+
+  <!-- Prompt with cursor -->
+  <text x="4" y="26" fill="#00ff00" font-family="monospace" font-size="4" font-weight="bold">$</text>
+
+  <!-- Blinking cursor -->
+  <rect x="7" y="23.5" width="1.5" height="3" fill="#00ff00" opacity="1">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Subtle glow -->
+  <rect x="2" y="9" width="28" height="19" rx="1" fill="none" stroke="#00ff00" stroke-width="0.3" opacity="0.4" filter="url(#glow)"/>
+</svg>

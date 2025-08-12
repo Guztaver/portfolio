@@ -18,7 +18,7 @@ const INITIAL_STATE: TerminalState = {
 };
 
 const SYSTEM_INFO = {
-  username: "gustavo",
+  username: "user",
   hostname: "portfolio",
   shell: "bash",
   version: "1.0.0",
