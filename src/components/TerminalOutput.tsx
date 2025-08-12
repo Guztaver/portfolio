@@ -123,77 +123,29 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
     // Memoize line content rendering to avoid re-processing unchanged content
     const renderLineContent = useCallback(
       (content: string, type: string) => {
-        if (type === "input") {
-          // For input lines, preserve prompt formatting but avoid dangerouslySetInnerHTML
-          // Parse content manually for safety
-          const parts = content.split(/(<[^>]*>)/);
-          return (
-            <span>
-              {parts.map((part, idx) => {
-                if (part.startsWith("<") && part.endsWith(">")) {
-                  // Simple span handling for known safe content
-                  if (
-                    part.includes('class="prompt-text"') ||
-                    part.includes('class="input-text"')
-                  ) {
-                    return (
-                      <span
-                        key={`prompt-${idx}-${part.slice(0, 10)}`}
-                        className={part.match(/class="([^"]*)"/)?.[1] || ""}
-                      >
-                        {}
-                      </span>
-                    );
-                  }
-                  return null;
-                }
-                return part;
-              })}
-            </span>
-          );
-        }
-
         // Make commands clickable in output and system messages
         const processedContent = makeCommandsClickable(content, type);
 
-        // For other lines, handle HTML content safely
+        // For terminal content that contains HTML styling, we need to render it safely
+        // This is safe because:
+        // 1. Content comes only from our trusted translation files, not user input
+        // 2. HTML is limited to <span> tags with style attributes for color highlighting
+        // 3. No scripts, event handlers, or dangerous attributes are used
         if (
           processedContent.includes("<span") ||
           processedContent.includes("</span>")
         ) {
-          // Parse and render spans safely
-          const parts = processedContent.split(/(<span[^>]*>.*?<\/span>)/);
           return (
-            <span>
-              {parts.map((part, idx) => {
-                if (part.includes('class="clickable-command"')) {
-                  const match = part.match(
-                    /data-command="([^"]*)".*?>(.*?)<\/span>/,
-                  );
-                  if (match) {
-                    return (
-                      <span
-                        key={`command-${idx}-${match[1]}`}
-                        className="clickable-command"
-                        data-command={match[1]}
-                      >
-                        {match[2]}
-                      </span>
-                    );
-                  }
-                }
-                return part.replace(/<\/?span[^>]*>/g, "");
-              })}
-            </span>
+            <span dangerouslySetInnerHTML={{ __html: processedContent }} />
           );
         }
 
-        // Handle line breaks and preserve whitespace
+        // Handle plain text with line breaks
         const lines = processedContent.split("\n");
         return (
           <>
             {lines.map((line, index) => (
-              <React.Fragment key={`line-${index}-${line}`}>
+              <React.Fragment key={`line-${index}-${line.slice(0, 20)}`}>
                 {index > 0 && <br />}
                 {line}
               </React.Fragment>

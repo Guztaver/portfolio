@@ -527,24 +527,20 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
       // Demo sequence commands
       const demoSequence = [
         {
-          command: isPortuguese ? "arvore" : "tree",
-          delay: 500,
-        },
-        {
           command: isPortuguese ? "experiencia" : "experience",
-          delay: 2000,
+          delay: 3000,
         },
         {
           command: isPortuguese ? "educacao" : "education",
-          delay: 2000,
+          delay: 3000,
         },
         {
           command: isPortuguese ? "contato" : "contact",
-          delay: 2000,
+          delay: 3000,
         },
         {
           command: isPortuguese ? "arvore" : "tree",
-          delay: 2000,
+          delay: 3000,
         },
       ];
 

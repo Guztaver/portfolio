@@ -20,7 +20,6 @@ export const TerminalBody: React.FC<TerminalBodyProps> = ({
   const terminalOutputRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new lines are added with smooth animation
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- We specifically want to trigger on lines.length changes
   useEffect(() => {
     if (terminalOutputRef.current) {
       // Small delay to ensure DOM is updated

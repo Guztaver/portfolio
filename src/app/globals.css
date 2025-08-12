@@ -463,6 +463,20 @@ body {
     width: 100%;
     overflow: hidden;
     align-items: center;
+    /* Reset button styling */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-align: left;
+    outline: none;
+}
+
+.terminal-prompt:focus {
+    outline: none;
 }
 
 .input-display {
