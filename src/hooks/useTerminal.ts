@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import type {
   TerminalLine,
   TerminalState,
@@ -32,6 +32,50 @@ export const useTerminal = (): UseTerminalReturn => {
   const initialized = useRef(false);
   const languageChangeRef = useRef(false);
 
+  // Cache for command results to avoid recomputation
+  const commandCache = useRef(new Map<string, CommandResult>());
+
+  // Memoize system info that doesn't change
+  const systemCommands = useMemo(
+    () =>
+      new Set([
+        "clear",
+        "limpar",
+        "whoami",
+        "quemSou",
+        "pwd",
+        "date",
+        "data",
+        "uname",
+        "sistema",
+        "ls",
+        "listar",
+        "cat",
+        "ler",
+        "echo",
+        "eco",
+        "history",
+        "historico",
+        "neofetch",
+        "tree",
+        "arvore",
+        "ps",
+        "processos",
+        "top",
+        "topo",
+        "free",
+        "memoria",
+        "uptime",
+        "tempo",
+        "sudo",
+        "exit",
+        "sair",
+        "df",
+        "disco",
+      ]),
+    [],
+  );
+
   const addLine = useCallback(
     (type: TerminalLine["type"], content: string, command?: string) => {
       const newLine: TerminalLine = {
@@ -41,13 +85,20 @@ export const useTerminal = (): UseTerminalReturn => {
         timestamp: new Date(),
         command,
       };
-      setLines((prev) => [...prev, newLine]);
+      // Use functional update to avoid stale closures and optimize rendering
+      setLines((prev) => {
+        // Limit lines to prevent memory bloat (keep last 1000 lines)
+        const newLines = [...prev, newLine];
+        return newLines.length > 1000 ? newLines.slice(-1000) : newLines;
+      });
     },
     [],
   );
 
   const clearTerminal = useCallback(() => {
     setLines([]);
+    // Clear command cache when terminal is cleared
+    commandCache.current.clear();
     const t = translations[state.currentLanguage];
     addLine("system", t.messages.cleared);
   }, [state.currentLanguage, addLine]);
@@ -57,8 +108,9 @@ export const useTerminal = (): UseTerminalReturn => {
       setState((prev) => ({ ...prev, currentLanguage: language }));
       const t = translations[language];
 
-      // Clear the terminal and show fresh welcome message
+      // Clear the terminal and command cache
       setLines([]);
+      commandCache.current.clear();
       addLine("system", t.messages.welcome);
       addLine("system", t.messages.helpTip);
 
@@ -75,6 +127,38 @@ export const useTerminal = (): UseTerminalReturn => {
   const executeSystemCommand = useCallback(
     (command: string, args: string[]): CommandResult => {
       const t = translations[state.currentLanguage];
+
+      // Create cache key for cacheable commands
+      const cacheKey = `${command}:${args.join(" ")}:${state.currentLanguage}`;
+
+      // Check cache for non-dynamic commands
+      const nonDynamicCommands = new Set([
+        "whoami",
+        "quemSou",
+        "uname",
+        "sistema",
+        "ls",
+        "listar",
+        "neofetch",
+        "tree",
+        "arvore",
+        "ps",
+        "processos",
+        "top",
+        "topo",
+        "free",
+        "memoria",
+        "df",
+        "disco",
+      ]);
+      if (
+        nonDynamicCommands.has(command) &&
+        commandCache.current.has(cacheKey)
+      ) {
+        return commandCache.current.get(cacheKey)!;
+      }
+
+      let result: CommandResult;
 
       switch (command) {
         case "clear":
@@ -253,8 +337,15 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
           };
 
         default:
-          return { output: "", isError: false };
+          result = { output: "", isError: false };
       }
+
+      // Cache non-dynamic results
+      if (nonDynamicCommands.has(command)) {
+        commandCache.current.set(cacheKey, result);
+      }
+
+      return result;
     },
     [state.currentLanguage, state.currentPath, state.commandHistory],
   );
@@ -262,6 +353,19 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
   const executeContentCommand = useCallback(
     (contentKey: string): CommandResult => {
       const t = translations[state.currentLanguage];
+
+      // Cache key for content commands (excluding resume due to side effects)
+      const cacheKey = `content:${contentKey}:${state.currentLanguage}`;
+
+      // Check cache for non-resume content
+      if (
+        contentKey !== "resume-content" &&
+        commandCache.current.has(cacheKey)
+      ) {
+        return commandCache.current.get(cacheKey)!;
+      }
+
+      let result: CommandResult;
 
       // Special handling for resume command - trigger PDF download
       if (contentKey === "resume-content") {
@@ -271,24 +375,31 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
             state.currentLanguage === "pt"
               ? "Gustavo_Muniz_Curriculo.pdf"
               : "Gustavo_Muniz_Resume.pdf";
-          return {
+          result = {
             output: `${t.messages.downloadingResume.replace("{filename}", filename)}\n${t.messages.resumeSuccess}\n\n${t.content[contentKey].title}\n\n${t.content[contentKey].content.join("\n")}`,
           };
         } catch (error) {
-          return {
+          result = {
             output: `Error generating PDF: ${error instanceof Error ? error.message : "Unknown error"}\n\n${t.content[contentKey].title}\n\n${t.content[contentKey].content.join("\n")}`,
             isError: true,
           };
         }
+        return result; // Don't cache resume command due to side effects
       }
 
       const content = t.content[contentKey];
 
       if (!content) {
-        return { output: "Content not found", isError: true };
+        result = { output: "Content not found", isError: true };
+      } else {
+        result = {
+          output: `${content.title}\n\n${content.content.join("\n")}`,
+        };
       }
 
-      return { output: `${content.title}\n\n${content.content.join("\n")}` };
+      // Cache the result
+      commandCache.current.set(cacheKey, result);
+      return result;
     },
     [state.currentLanguage],
   );
@@ -307,42 +418,58 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
       const args = parts.slice(1);
       const t = translations[state.currentLanguage];
 
-      // Update command history
-      const newHistoryEntry = {
-        command,
-        timestamp: new Date(),
+      // Update command history - use functional update for better performance
+      setState((prev) => {
+        const newHistoryEntry = {
+          command,
+          timestamp: new Date(),
+        };
+
+        return {
+          ...prev,
+          commandHistory: [...prev.commandHistory.slice(-99), newHistoryEntry], // Keep last 100 commands
+          historyIndex: -1,
+        };
+      });
+
+      // Defer heavy computation to avoid blocking UI
+      const processCommand = async () => {
+        let result: CommandResult;
+
+        // Check if it's a content command
+        const commandMapping = t.commands[cmd];
+        if (commandMapping && commandMapping.endsWith("-content")) {
+          result = executeContentCommand(commandMapping);
+        } else if (systemCommands.has(cmd)) {
+          // System command
+          result = executeSystemCommand(cmd, args);
+        } else {
+          // Command not found - create result directly to avoid function call
+          result = { output: "", isError: true };
+        }
+
+        // Handle special cases
+        if (result.shouldClear) {
+          setLines([]);
+          commandCache.current.clear();
+          addLine("system", t.messages.cleared);
+        } else if (result.output) {
+          addLine(result.isError ? "error" : "output", result.output);
+        } else if (!commandMapping && !systemCommands.has(cmd)) {
+          // Command not found
+          addLine("error", `${t.messages.commandNotFound} ${cmd}`);
+          addLine("system", t.messages.helpHint);
+        }
+
+        setState((prev) => ({ ...prev, isProcessing: false }));
       };
 
-      setState((prev) => ({
-        ...prev,
-        commandHistory: [...prev.commandHistory, newHistoryEntry],
-        historyIndex: -1,
-      }));
-
-      let result: CommandResult;
-
-      // Check if it's a content command
-      const commandMapping = t.commands[cmd];
-      if (commandMapping && commandMapping.endsWith("-content")) {
-        result = executeContentCommand(commandMapping);
+      // Use requestIdleCallback for better performance, fallback to setTimeout
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(processCommand);
       } else {
-        // System command
-        result = executeSystemCommand(cmd, args);
+        setTimeout(processCommand, 0);
       }
-
-      // Handle special cases
-      if (result.shouldClear) {
-        setLines([]);
-        addLine("system", t.messages.cleared);
-      } else if (result.output) {
-        addLine(result.isError ? "error" : "output", result.output);
-      } else if (!commandMapping) {
-        // Command not found
-        addLine("error", `${t.messages.commandNotFound} ${cmd}`);
-        addLine("system", t.messages.helpHint);
-      }
-
-      setState((prev) => ({ ...prev, isProcessing: false }));
     },
     [
       state.currentLanguage,
@@ -350,6 +477,7 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
       getPrompt,
       executeSystemCommand,
       executeContentCommand,
+      systemCommands,
     ],
   );
 
@@ -382,31 +510,33 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
       addLine("system", translations["en"].messages.welcome);
       addLine("system", translations["en"].messages.helpTip);
 
-      // Auto-execute tree command on startup
-      setTimeout(() => {
+      // Auto-execute tree command on startup with shorter delay
+      const timer = setTimeout(() => {
         executeCommand("tree");
-      }, 500);
+      }, 300);
 
       initialized.current = true;
+
+      return () => clearTimeout(timer);
     }
   }, [addLine, executeCommand]); // Only run once on mount
 
   // Handle language change to auto-execute tree command
   useEffect(() => {
     if (initialized.current && languageChangeRef.current) {
-      // Auto-execute tree command in new language after language change
+      // Auto-execute tree command in new language after language change with shorter delay
       const timer = setTimeout(() => {
         executeCommand(state.currentLanguage === "pt" ? "arvore" : "tree");
         languageChangeRef.current = false;
-      }, 500);
+      }, 200);
 
       return () => clearTimeout(timer);
     }
   }, [state.currentLanguage, executeCommand]);
 
-  // Function to get all available commands for clickable functionality
-  const getAvailableCommands = useCallback(() => {
-    const systemCommands = [
+  // Memoize available commands to avoid recalculation
+  const availableCommands = useMemo(() => {
+    const systemCommandsList = [
       "help",
       "about",
       "experience",
@@ -463,8 +593,13 @@ Passion:     ∞ GB     100% GB      0 GB        ∞ GB`,
           ]
         : [];
 
-    return [...systemCommands, ...localizedCommands];
+    return [...systemCommandsList, ...localizedCommands];
   }, [state.currentLanguage]);
+
+  const getAvailableCommands = useCallback(
+    () => availableCommands,
+    [availableCommands],
+  );
 
   return {
     state,

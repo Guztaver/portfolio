@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap")
+layer(fonts);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,7 +13,7 @@ html {
 html.loaded {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.2s ease-out;
 }
 
 :root {
@@ -80,12 +81,15 @@ body {
     overflow: hidden;
     opacity: 0;
     transform: scale(0.95) translateY(20px);
-    animation: terminalStart 1s ease-out 0.2s forwards;
+    animation: terminalStart 0.6s ease-out 0.1s forwards;
     position: relative;
     flex-shrink: 0;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    will-change: transform, opacity;
 }
 
 @keyframes terminalStart {
@@ -108,14 +112,16 @@ body {
     }
 }
 
-.terminal:hover {
-    transform: scale(1.01) translateY(-5px);
-    box-shadow:
-        0 0 60px rgba(0, 255, 0, 0.15),
-        0 30px 80px rgba(0, 0, 0, 0.9),
-        0 15px 40px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(0, 255, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+@media (hover: hover) and (pointer: fine) {
+    .terminal:hover {
+        transform: scale(1.005) translateY(-2px);
+        box-shadow:
+            0 0 40px rgba(0, 255, 0, 0.12),
+            0 20px 60px rgba(0, 0, 0, 0.8),
+            0 10px 30px rgba(0, 0, 0, 0.6),
+            0 0 0 1px rgba(0, 255, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
 }
 
 .terminal-header {
@@ -142,8 +148,10 @@ body {
     transition: opacity 0.2s ease;
 }
 
-.control:hover {
-    opacity: 0.8;
+@media (hover: hover) and (pointer: fine) {
+    .control:hover {
+        opacity: 0.8;
+    }
 }
 
 .control.close {
@@ -182,9 +190,11 @@ body {
     transition: all 0.2s ease;
 }
 
-.lang-btn:hover {
-    border-color: var(--terminal-green);
-    color: var(--terminal-green);
+@media (hover: hover) and (pointer: fine) {
+    .lang-btn:hover {
+        border-color: var(--terminal-green);
+        color: var(--terminal-green);
+    }
 }
 
 .lang-btn.active {
@@ -222,9 +232,11 @@ body {
     opacity: 0.8;
 }
 
-.terminal-output::-webkit-scrollbar-thumb:hover {
-    background: var(--terminal-green-dim);
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+    .terminal-output::-webkit-scrollbar-thumb:hover {
+        background: var(--terminal-green-dim);
+        opacity: 1;
+    }
 }
 
 /* Scroll indicator */
@@ -256,8 +268,10 @@ body {
     pointer-events: none;
 }
 
-.terminal-output:hover::after {
-    opacity: 0.6;
+@media (hover: hover) and (pointer: fine) {
+    .terminal-output:hover::after {
+        opacity: 0.6;
+    }
 }
 
 /* Scroll indicators */
@@ -295,9 +309,11 @@ body {
     font-family: inherit;
 }
 
-.scroll-to-bottom-btn:hover {
-    background: var(--terminal-green-dim);
-    transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+    .scroll-to-bottom-btn:hover {
+        background: var(--terminal-green-dim);
+        transform: translateY(-1px);
+    }
 }
 
 @keyframes fadeInOut {
@@ -323,8 +339,14 @@ body {
     font-size: 10px;
     line-height: 1;
     font-weight: 600;
-    text-shadow: 0 0 10px var(--terminal-green);
-    animation: glow 2s ease-in-out infinite alternate;
+    text-shadow: 0 0 8px var(--terminal-green);
+    will-change: text-shadow;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ascii-text {
+        animation: glow 3s ease-in-out infinite alternate;
+    }
 }
 
 @keyframes glow {
@@ -332,7 +354,7 @@ body {
         text-shadow: 0 0 5px var(--terminal-green);
     }
     to {
-        text-shadow: 0 0 15px var(--terminal-green);
+        text-shadow: 0 0 12px var(--terminal-green);
     }
 }
 
@@ -481,14 +503,24 @@ body {
 
 .cursor {
     color: var(--terminal-green);
-    animation: blink 1s infinite;
     font-weight: 500;
+    will-change: opacity;
 }
 
 .cursor-blink {
     color: var(--terminal-yellow);
-    animation: blink 0.5s infinite;
     font-weight: 500;
+    will-change: opacity;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .cursor {
+        animation: blink 1s infinite;
+    }
+
+    .cursor-blink {
+        animation: blink 0.5s infinite;
+    }
 }
 
 @keyframes blink {
@@ -516,8 +548,10 @@ body {
     cursor: pointer;
 }
 
-.terminal-line a:hover {
-    color: var(--terminal-green);
+@media (hover: hover) and (pointer: fine) {
+    .terminal-line a:hover {
+        color: var(--terminal-green);
+    }
 }
 
 /* Download buttons */
@@ -536,9 +570,11 @@ body {
     text-decoration: none;
 }
 
-.download-btn:hover {
-    background: var(--terminal-green);
-    color: var(--terminal-bg);
+@media (hover: hover) and (pointer: fine) {
+    .download-btn:hover {
+        background: var(--terminal-green);
+        color: var(--terminal-bg);
+    }
 }
 
 /* Responsive design */
@@ -642,7 +678,7 @@ body {
     }
 }
 
-/* Accessibility */
+/* Accessibility and Performance */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -650,7 +686,30 @@ body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
+
+    .terminal {
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .ascii-text {
+        animation: none !important;
+        text-shadow: 0 0 8px var(--terminal-green) !important;
+    }
+}
+
+/* Performance optimizations */
+.terminal,
+.terminal-output,
+.terminal-input,
+.clickable-command {
+    contain: layout style paint;
+}
+
+.terminal-line {
+    contain: layout style;
 }
 
 /* Focus styles */
@@ -678,10 +737,11 @@ body {
     position: relative !important;
 }
 
-.clickable-command:hover {
-    color: var(--terminal-green) !important;
-    text-shadow: 0 0 8px var(--terminal-green) !important;
-    transform: none !important;
+@media (hover: hover) and (pointer: fine) {
+    .clickable-command:hover {
+        color: var(--terminal-green) !important;
+        text-shadow: 0 0 8px var(--terminal-green) !important;
+    }
 }
 
 .clickable-command:active {
@@ -705,8 +765,10 @@ body {
     z-index: -1;
 }
 
-.clickable-command:hover::before {
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+    .clickable-command:hover::before {
+        opacity: 1;
+    }
 }
 
 /* Make sure the terminal loads properly */

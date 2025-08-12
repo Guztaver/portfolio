@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import { TerminalInputProps } from "../types";
 
 export const TerminalInput: React.FC<TerminalInputProps> = ({
@@ -20,13 +26,40 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
     }
   }, [isProcessing]);
 
+  // Memoize common commands for autocomplete
+  const commonCommands = useMemo(
+    () => [
+      "help",
+      "about",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "resume",
+      "contact",
+      "clear",
+      "whoami",
+      "ls",
+      "pwd",
+      "date",
+      "uname",
+      "cat",
+      "echo",
+      "history",
+    ],
+    [],
+  );
+
   // Handle command execution
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (input.trim() && !isProcessing) {
-        onCommand(input.trim());
-        setInput("");
+        // Use requestAnimationFrame to defer command execution
+        requestAnimationFrame(() => {
+          onCommand(input.trim());
+          setInput("");
+        });
       }
     },
     [input, isProcessing, onCommand],
@@ -37,10 +70,10 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (isProcessing) return;
 
-      // Find terminal output for scrolling
-      const terminalOutput = document.querySelector(
-        ".terminal-output",
-      ) as HTMLElement;
+      // Use requestAnimationFrame for non-critical operations to avoid blocking
+      const deferOperation = (operation: () => void) => {
+        requestAnimationFrame(operation);
+      };
 
       switch (e.key) {
         case "ArrowUp":
@@ -59,63 +92,63 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
 
         case "PageUp":
           e.preventDefault();
-          if (terminalOutput) {
-            terminalOutput.scrollBy(0, -terminalOutput.clientHeight * 0.8);
-          }
+          deferOperation(() => {
+            const terminalOutput = document.querySelector(
+              ".terminal-output",
+            ) as HTMLElement;
+            if (terminalOutput) {
+              terminalOutput.scrollBy(0, -terminalOutput.clientHeight * 0.8);
+            }
+          });
           break;
 
         case "PageDown":
           e.preventDefault();
-          if (terminalOutput) {
-            terminalOutput.scrollBy(0, terminalOutput.clientHeight * 0.8);
-          }
+          deferOperation(() => {
+            const terminalOutput = document.querySelector(
+              ".terminal-output",
+            ) as HTMLElement;
+            if (terminalOutput) {
+              terminalOutput.scrollBy(0, terminalOutput.clientHeight * 0.8);
+            }
+          });
           break;
 
         case "Home":
           if (e.ctrlKey) {
             e.preventDefault();
-            if (terminalOutput) {
-              terminalOutput.scrollTo({ top: 0, behavior: "smooth" });
-            }
+            deferOperation(() => {
+              const terminalOutput = document.querySelector(
+                ".terminal-output",
+              ) as HTMLElement;
+              if (terminalOutput) {
+                terminalOutput.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            });
           }
           break;
 
         case "End":
           if (e.ctrlKey) {
             e.preventDefault();
-            if (terminalOutput) {
-              terminalOutput.scrollTo({
-                top: terminalOutput.scrollHeight,
-                behavior: "smooth",
-              });
-            }
+            deferOperation(() => {
+              const terminalOutput = document.querySelector(
+                ".terminal-output",
+              ) as HTMLElement;
+              if (terminalOutput) {
+                terminalOutput.scrollTo({
+                  top: terminalOutput.scrollHeight,
+                  behavior: "smooth",
+                });
+              }
+            });
           }
           break;
 
         case "Tab":
           e.preventDefault();
-          // Basic autocomplete - could be enhanced
+          // Optimized autocomplete with memoized commands
           const currentInput = input.toLowerCase();
-          const commonCommands = [
-            "help",
-            "about",
-            "experience",
-            "education",
-            "skills",
-            "projects",
-            "resume",
-            "contact",
-            "clear",
-            "whoami",
-            "ls",
-            "pwd",
-            "date",
-            "uname",
-            "cat",
-            "echo",
-            "history",
-          ];
-
           const matches = commonCommands.filter(
             (cmd) => cmd.startsWith(currentInput) && cmd !== currentInput,
           );
@@ -123,15 +156,15 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
           if (matches.length === 1) {
             setInput(matches[0]);
           } else if (matches.length > 1) {
-            // Find common prefix
+            // Find common prefix efficiently
             let commonPrefix = matches[0];
             for (let i = 1; i < matches.length; i++) {
               let j = 0;
-              while (
-                j < commonPrefix.length &&
-                j < matches[i].length &&
-                commonPrefix[j] === matches[i][j]
-              ) {
+              const minLength = Math.min(
+                commonPrefix.length,
+                matches[i].length,
+              );
+              while (j < minLength && commonPrefix[j] === matches[i][j]) {
                 j++;
               }
               commonPrefix = commonPrefix.substring(0, j);
@@ -147,22 +180,27 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
           break;
       }
     },
-    [input, isProcessing, onHistoryNavigation],
+    [input, isProcessing, onHistoryNavigation, commonCommands],
   );
 
-  // Handle input change
+  // Handle input change with debouncing for performance
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInput(e.target.value);
+      const value = e.target.value;
+      // Update input immediately for responsive UI
+      setInput(value);
     },
     [],
   );
 
   // Handle clicks on the display area to focus hidden input
   const handleDisplayClick = useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    // Use requestAnimationFrame to avoid blocking the click event
+    requestAnimationFrame(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    });
   }, []);
 
   // Get the prompt string

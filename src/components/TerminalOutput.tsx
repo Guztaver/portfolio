@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useState, useCallback } from "react";
+import React, { forwardRef, useState, useCallback, useMemo } from "react";
 import type { TerminalOutputProps } from "../types";
 
 export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
@@ -8,11 +8,31 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
     const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
+    // Memoize the command processing patterns to avoid recreating them on every render
+    const commandPatterns = useMemo(() => {
+      if (!onCommand || !availableCommands.length) return [];
+
+      return availableCommands.map((command) => ({
+        command,
+        treePattern: new RegExp(`(├──|└──)\\s+(${command})(?=\\s|$)`, "gi"),
+        helpPattern: new RegExp(`(\\s{2,})(${command})(?=\\s+-)`, "gi"),
+      }));
+    }, [onCommand, availableCommands]);
+
+    // Memoize processed content to avoid reprocessing the same content
+    const processedContentCache = useMemo(() => new Map<string, string>(), []);
+
     // Function to make commands clickable - only in help content and system messages
     const makeCommandsClickable = useCallback(
       (content: string, type: string) => {
-        if (!onCommand || !availableCommands.length) {
+        if (!onCommand || !commandPatterns.length) {
           return content;
+        }
+
+        // Create a cache key
+        const cacheKey = `${type}:${content}`;
+        if (processedContentCache.has(cacheKey)) {
+          return processedContentCache.get(cacheKey)!;
         }
 
         // Only make commands clickable in very specific contexts
@@ -29,44 +49,43 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
           content.includes("└──"); // Tree structure
 
         if (!shouldMakeClickable) {
+          processedContentCache.set(cacheKey, content);
           return content;
         }
 
         let processedContent = content;
 
-        // Simple approach: process each command individually
-        availableCommands.forEach((command) => {
+        // Use pre-compiled patterns
+        commandPatterns.forEach(({ command, treePattern, helpPattern }) => {
+          // Reset regex lastIndex to avoid state issues
+          treePattern.lastIndex = 0;
+          helpPattern.lastIndex = 0;
+
           // Pattern 1: Tree structure (├── command or └── command)
-          const treePattern = new RegExp(
-            `(├──|└──)\\s+(${command})(?=\\s|$)`,
-            "gi",
-          );
           processedContent = processedContent.replace(
             treePattern,
             (match, prefix, cmd) => {
-              return `${prefix} <span class="clickable-command" data-command="${cmd.toLowerCase()}" style="color: #61dafb; cursor: pointer; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='#21a1c4'" onmouseout="this.style.color='#61dafb'">${cmd}</span>`;
+              return `${prefix} <span class="clickable-command" data-command="${cmd.toLowerCase()}">${cmd}</span>`;
             },
           );
 
           // Pattern 2: Help menu format (  command - description)
-          const helpPattern = new RegExp(
-            `(\\s{2,})(${command})(?=\\s+-)`,
-            "gi",
-          );
           processedContent = processedContent.replace(
             helpPattern,
             (match, spaces, cmd) => {
-              return `${spaces}<span class="clickable-command" data-command="${cmd.toLowerCase()}" style="color: #61dafb; cursor: pointer; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='#21a1c4'" onmouseout="this.style.color='#61dafb'">${cmd}</span>`;
+              return `${spaces}<span class="clickable-command" data-command="${cmd.toLowerCase()}">${cmd}</span>`;
             },
           );
         });
 
+        // Cache the result
+        processedContentCache.set(cacheKey, processedContent);
         return processedContent;
       },
-      [onCommand, availableCommands],
+      [onCommand, commandPatterns, processedContentCache],
     );
 
-    // Handle clicks on commands
+    // Handle clicks on commands with event delegation
     const handleContentClick = useCallback(
       (
         e:
@@ -75,11 +94,12 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
       ) => {
         const target = e.target as HTMLElement;
         if (target.classList.contains("clickable-command")) {
-          const command = target.getAttribute("data-command");
-          if (command && onCommand) {
+          const commandAttr = target.getAttribute("data-command");
+          if (commandAttr && onCommand) {
             e.preventDefault();
             e.stopPropagation();
-            onCommand(command);
+            // Defer command execution to avoid blocking the current interaction
+            requestAnimationFrame(() => onCommand(commandAttr));
           }
         }
       },
@@ -100,45 +120,54 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
       }
     };
 
-    const renderLineContent = (content: string, type: string) => {
-      if (type === "input") {
-        // For input lines, we want to preserve the prompt formatting
-        return <span dangerouslySetInnerHTML={{ __html: content }} />;
-      }
+    // Memoize line content rendering to avoid re-processing unchanged content
+    const renderLineContent = useCallback(
+      (content: string, type: string) => {
+        if (type === "input") {
+          // For input lines, we want to preserve the prompt formatting
+          return <span dangerouslySetInnerHTML={{ __html: content }} />;
+        }
 
-      // Make commands clickable in output and system messages
-      const processedContent = makeCommandsClickable(content, type);
+        // Make commands clickable in output and system messages
+        const processedContent = makeCommandsClickable(content, type);
 
-      // For other lines, handle HTML content and preserve formatting
-      if (
-        processedContent.includes("<span") ||
-        processedContent.includes("</span>")
-      ) {
-        return <span dangerouslySetInnerHTML={{ __html: processedContent }} />;
-      }
+        // For other lines, handle HTML content and preserve formatting
+        if (
+          processedContent.includes("<span") ||
+          processedContent.includes("</span>")
+        ) {
+          return (
+            <span dangerouslySetInnerHTML={{ __html: processedContent }} />
+          );
+        }
 
-      // Handle line breaks and preserve whitespace
-      const lines = processedContent.split("\n");
-      return (
-        <>
-          {lines.map((line, index) => (
-            <React.Fragment key={`line-${index}-${line}`}>
-              {index > 0 && <br />}
-              {line}
-            </React.Fragment>
-          ))}
-        </>
-      );
-    };
+        // Handle line breaks and preserve whitespace
+        const lines = processedContent.split("\n");
+        return (
+          <>
+            {lines.map((line, index) => (
+              <React.Fragment key={`line-${index}-${line}`}>
+                {index > 0 && <br />}
+                {line}
+              </React.Fragment>
+            ))}
+          </>
+        );
+      },
+      [makeCommandsClickable],
+    );
 
-    // Handle scroll events to show/hide scroll indicators
+    // Debounce scroll events to improve performance
     const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
       const target = e.target as HTMLDivElement;
       const { scrollTop, scrollHeight, clientHeight } = target;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight - 5;
 
-      setIsScrolledToBottom(isAtBottom);
-      setShowScrollIndicator(scrollHeight > clientHeight && scrollTop > 10);
+      // Use requestAnimationFrame to debounce scroll updates
+      requestAnimationFrame(() => {
+        setIsScrolledToBottom(isAtBottom);
+        setShowScrollIndicator(scrollHeight > clientHeight && scrollTop > 10);
+      });
     }, []);
 
     return (
@@ -161,11 +190,19 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
           }}
           tabIndex={0}
         >
-          {lines.map((line) => (
-            <div key={line.id} className={getLineClassName(line.type)}>
-              {renderLineContent(line.content, line.type)}
-            </div>
-          ))}
+          {lines.map((line) => {
+            // Memoize individual line rendering
+            const LineComponent = React.memo(
+              ({ lineData }: { lineData: typeof line }) => (
+                <div className={getLineClassName(lineData.type)}>
+                  {renderLineContent(lineData.content, lineData.type)}
+                </div>
+              ),
+            );
+            LineComponent.displayName = `Line-${line.id}`;
+
+            return <LineComponent key={line.id} lineData={line} />;
+          })}
         </div>
 
         {showScrollIndicator && !isScrolledToBottom && (
@@ -174,21 +211,28 @@ export const TerminalOutput = forwardRef<HTMLDivElement, TerminalOutputProps>(
             className="scroll-to-bottom-btn"
             onClick={() => {
               if (ref && "current" in ref && ref.current) {
-                ref.current.scrollTo({
-                  top: ref.current.scrollHeight,
-                  behavior: "smooth",
+                // Use requestAnimationFrame to avoid blocking user interactions
+                requestAnimationFrame(() => {
+                  if (ref && "current" in ref && ref.current) {
+                    ref.current.scrollTo({
+                      top: ref.current.scrollHeight,
+                      behavior: "smooth",
+                    });
+                  }
                 });
               }
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                if (ref && "current" in ref && ref.current) {
-                  ref.current.scrollTo({
-                    top: ref.current.scrollHeight,
-                    behavior: "smooth",
-                  });
-                }
+                requestAnimationFrame(() => {
+                  if (ref && "current" in ref && ref.current) {
+                    ref.current.scrollTo({
+                      top: ref.current.scrollHeight,
+                      behavior: "smooth",
+                    });
+                  }
+                });
               }
             }}
           >
