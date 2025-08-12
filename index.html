@@ -6,7 +6,12 @@
         <title>Gustavo Muniz - Terminal Portfolio</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="stylesheet" href="assets/app.css" />
-        <script src="assets/app.js" defer></script>
+        <script src="assets/js/translations.js"></script>
+        <script src="assets/js/translator.js"></script>
+        <script src="assets/js/commands.js"></script>
+        <script src="assets/js/pdf-generator.js"></script>
+        <script src="assets/js/terminal-portfolio.js"></script>
+        <script src="assets/js/main.js" defer></script>
     </head>
     <body>
         <div class="terminal">
@@ -108,6 +113,25 @@
                         <p>🐱 https://github.com/guztaver</p>
                         <p>💼 https://linkedin.com/in/gustavo404</p>
                     </div>
+
+<div id="about-content-pt">
+    <h2>👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Full Stack</h2>
+    <p class="bio">
+        Com agilidade e performance em mente, almejo sempre criar sistemas que,
+        além de muito ágeis, facilitam a vida dos usuários que utilizam eles.
+        Com experiência profissional & anos de estudo, posso identificar erros
+        com agilidade e resolver-los em tempos curtos, que podem ajudar no
+        crescimento da empresa! E um entusiasta do mundo Linux!
+    </p>
+    <div class="contact-info">
+        <p>📞 (73) 981155999</p>
+        <p>📧 contact@gustavoanjos.com</p>
+        <p>🌐 https://gustavoanjos.com</p>
+        <p>🐱 https://github.com/guztaver</p>
+        <p>💼 https://linkedin.com/in/gustavo404</p>
+    </div>
+</div>
+
                 </div>
 
                 <div id="experience-content">
@@ -231,54 +255,130 @@
                     </div>
                 </div>
 
+                <!-- English Help Content -->
                 <div id="help-content">
                     <h2>🆘 AVAILABLE COMMANDS</h2>
                     <div class="command-list">
                         <div class="command-item">
-                            <span class="cmd">help</span> - Show this help
-                            message
+                            <span class="cmd">help</span> - Show this help message
                         </div>
                         <div class="command-item">
-                            <span class="cmd">about</span> - Learn about me and
-                            my background
+                            <span class="cmd">about</span> - Learn about me and my background
                         </div>
                         <div class="command-item">
-                            <span class="cmd">experience</span> - View my work
-                            experience
+                            <span class="cmd">experience</span> - View my work experience
                         </div>
                         <div class="command-item">
-                            <span class="cmd">education</span> - View my
-                            academic background
+                            <span class="cmd">education</span> - View my academic background
                         </div>
                         <div class="command-item">
-                            <span class="cmd">skills</span> - See my technical
-                            skills
+                            <span class="cmd">skills</span> - See my technical skills
                         </div>
                         <div class="command-item">
-                            <span class="cmd">projects</span> - View my side
-                            projects
+                            <span class="cmd">projects</span> - View my side projects
                         </div>
                         <div class="command-item">
                             <span class="cmd">resume</span> - Download my resume
                         </div>
                         <div class="command-item">
-                            <span class="cmd">contact</span> - Get my contact
-                            information
+                            <span class="cmd">contact</span> - Get my contact information
                         </div>
                         <div class="command-item">
                             <span class="cmd">clear</span> - Clear the terminal
                         </div>
                         <div class="command-item">
-                            <span class="cmd">whoami</span> - Display current
-                            user
+                            <span class="cmd">whoami</span> - Display current user
                         </div>
                         <div class="command-item">
-                            <span class="cmd">ls</span> - List available
-                            sections
+                            <span class="cmd">ls</span> - List available sections
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">pwd</span> - Show current directory
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">date</span> - Show current date and time
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">uname</span> - Show system information
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">cat [file]</span> - Display file contents
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">neofetch</span> - Display system info with style
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">tree</span> - Show directory structure
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">history</span> - Show command history
                         </div>
                     </div>
                 </div>
 
+                <!-- Portuguese Help Content -->
+                <div id="help-content-pt">
+                    <h2>🆘 COMANDOS DISPONÍVEIS</h2>
+                    <div class="command-list">
+                        <div class="command-item">
+                            <span class="cmd">ajuda</span> - Mostrar esta mensagem de ajuda
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">sobre</span> - Saber mais sobre mim e minha experiência
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">experiencia</span> - Ver minha experiência profissional
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">educacao</span> - Ver minha formação acadêmica
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">habilidades</span> - Ver minhas habilidades técnicas
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">projetos</span> - Ver meus projetos pessoais
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">curriculo</span> - Baixar meu currículo
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">contato</span> - Obter minhas informações de contato
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">limpar</span> - Limpar o terminal
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">quemSou</span> - Mostrar usuário atual
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">listar</span> - Listar seções disponíveis
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">pwd</span> - Mostrar diretório atual
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">data</span> - Mostrar data e hora atual
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">sistema</span> - Mostrar informações do sistema
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">ler [arquivo]</span> - Exibir conteúdo do arquivo
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">neofetch</span> - Exibir informações do sistema com estilo
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">arvore</span> - Mostrar estrutura de diretórios
+                        </div>
+                        <div class="command-item">
+                            <span class="cmd">historico</span> - Mostrar histórico de comandos
+                        </div>
+                        <div class="command-note">
+                            <em>💡 Dica: Comandos em inglês também funcionam!</em>
+                        </div>
+                    </div>
+                </div>
                 <div id="contact-content">
                     <h2>📞 CONTACT INFORMATION</h2>
                     <div class="contact-grid">
