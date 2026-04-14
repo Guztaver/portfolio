@@ -82,6 +82,38 @@ const resumeData: Record<Language, ResumeData> = {
     ],
     projects: [
       {
+        name: "School Meal Management",
+        description:
+          "Comprehensive system developed for the Department of Education to manage and control school meals distribution, inventory, and logistics.",
+        technologies: "Laravel, Vue.js",
+        impact:
+          "Streamlined food distribution and inventory control for the municipal education department.",
+      },
+      {
+        name: "AI Financial Manager",
+        description:
+          "Mobile application for financial management featuring AI-driven insights and spending analysis to help users make smarter financial decisions.",
+        technologies: "React Native, AI Integration",
+        impact:
+          "Improved user financial awareness through automated analysis.",
+      },
+      {
+        name: "Medical Regulation System",
+        description:
+          "High-performance management system for medical health system regulation, streamlining healthcare processes and patient flow.",
+        technologies: "Spring Boot, Vue.js",
+        impact:
+          "Increased efficiency in medical appointments and patient regulation.",
+      },
+      {
+        name: "Personal Activity Tracker",
+        description:
+          "Full-stack application designed for tracking daily activities, personal goals, and productivity monitoring.",
+        technologies: "Spring Boot, Angular",
+        impact:
+          "Helped users monitor productivity and achieve personal goals.",
+      },
+      {
         name: "Municipal Fuel Management System",
         description:
           "Complete fuel management system for public fleets built with Laravel. Features fuel control with mandatory authorization, real-time analytics dashboard, vehicle management with MERCOSUL validation, role-based access control (Admin, Manager, Operator), detailed reports with CSV export, and cost control with full transparency.",
@@ -142,6 +174,38 @@ const resumeData: Record<Language, ResumeData> = {
     ],
     projects: [
       {
+        name: "Gestão de Merendas Escolares",
+        description:
+          "Sistema abrangente desenvolvido para a Secretaria de Educação para gerir e controlar a distribuição, estoque e logística de merendas escolares.",
+        technologies: "Laravel, Vue.js",
+        impact:
+          "Otimizou a distribuição de alimentos e controle de estoque para a secretaria de educação municipal.",
+      },
+      {
+        name: "Gestão Financeira com IA",
+        description:
+          "Aplicativo mobile de gestão financeira com insights e análises geridas por Inteligência Artificial para ajudar usuários a tomar decisões financeiras mais inteligentes.",
+        technologies: "React Native, IA Integration",
+        impact:
+          "Melhorou a consciência financeira dos usuários através de análises automatizadas.",
+      },
+      {
+        name: "Sistema de Regulação Médica",
+        description:
+          "Sistema de gestão de alta performance para regulação do sistema de saúde médica, otimizando processos e fluxos de atendimento.",
+        technologies: "Spring Boot, Vue.js",
+        impact:
+          "Aumentou a eficiência nas marcações e regulação de pacientes.",
+      },
+      {
+        name: "Tracking de Atividades Pessoais",
+        description:
+          "Aplicação full-stack projetada para acompanhamento de atividades diárias, metas pessoais e monitoramento de produtividade.",
+        technologies: "Spring Boot, Angular",
+        impact:
+          "Ajudou usuários a monitorar produtividade e alcançar metas pessoais.",
+      },
+      {
         name: "Sistema de Gerenciamento de Combustível Municipal",
         description:
           "Sistema completo de gerenciamento de combustível para frotas públicas desenvolvido em Laravel. Oferece controle total de abastecimentos com autorização obrigatória, dashboard analytics com gráficos em tempo real, gestão de veículos com validação MERCOSUL, sistema de roles (Admin, Gerente, Operador), relatórios detalhados e exportação CSV, e controle de custos com transparência total.",
@@ -155,7 +219,7 @@ const resumeData: Record<Language, ResumeData> = {
   },
 };
 
-export const generateResumePDF = (language: Language): void => {
+export const generateResumePDF = async (language: Language): Promise<void> => {
   const data = resumeData[language];
   const doc = new jsPDF();
 
@@ -167,6 +231,14 @@ export const generateResumePDF = (language: Language): void => {
   // Header
   doc.setFillColor(44, 62, 80); // primaryColor
   doc.rect(0, 0, 210, 40, "F");
+
+  // Photo
+  try {
+    const imgData = "/guztaver-photo.jpg";
+    doc.addImage(imgData, "JPEG", 170, 5, 30, 30);
+  } catch (error) {
+    console.error("Could not add image to PDF:", error);
+  }
 
   // Name
   doc.setTextColor(255, 255, 255);

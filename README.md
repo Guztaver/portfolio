@@ -172,9 +172,9 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 👨‍💻 Author
 
 **Gustavo Muniz**
-- Website: [gustavomuniz.dev](https://gustavomuniz.dev)
-- GitHub: [@gustavomuniz](https://github.com/gustavomuniz)
-- LinkedIn: [gustavomuniz](https://linkedin.com/in/gustavomuniz)
+- Website: [gustavoanjos.com](https://gustavoanjos.com)
+- GitHub: [@guztaver](https://github.com/guztaver)
+- LinkedIn: [gustavo404](https://linkedin.com/in/gustavo404)
 
 ---
 
