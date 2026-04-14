@@ -12,6 +12,11 @@ interface ResumeData {
     linkedin: string;
   };
   profile: string;
+  skills: {
+    backend: string[];
+    frontend: string[];
+    bestPractices: string[];
+  };
   experience: Array<{
     position: string;
     company: string;
@@ -39,33 +44,38 @@ const resumeData: Record<Language, ResumeData> = {
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
-      website: "https://gustavoanjos.com",
-      github: "https://github.com/guztaver",
-      linkedin: "https://linkedin.com/in/gustavo404",
+      website: "gustavoanjos.com",
+      github: "github.com/guztaver",
+      linkedin: "linkedin.com/in/gustavo404",
     },
     profile:
-      "With agility and performance in mind, I always aim to create systems that are not only highly efficient but also make life easier for the users who rely on them. With professional experience & years of study, I can swiftly identify errors and resolve them in short timeframes, contributing to the company's growth! I am also a passionate enthusiast of the Linux world!",
+      "Backend developer focused on high-performance systems and clean architecture. Expert in creating efficient solutions that simplify complex business processes. Linux enthusiast with a strong commitment to best practices like TDD and Clean Code.",
+    skills: {
+      backend: ["PHP (Laravel, Symfony)", "Java (Spring Boot)", "Node.js (TypeScript)", "Go", "C# (.NET)"],
+      frontend: ["React, Next.js", "Vue.js, Nuxt.js", "Angular", "Tailwind CSS"],
+      bestPractices: ["TDD", "Clean Code", "Clean Architecture", "Design Patterns", "Agile"]
+    },
     experience: [
       {
         position: "Support and Development Analyst",
         company: "PREFEITURA DE PAU BRASIL",
         period: "2025 - CURRENT",
         description:
-          "Allied with development tools (Laravel, Symfony, Golang, C#), I identified structural problems in the prefecture, and developed applications to help manage, control and facilitate public management through software! In addition to maintaining servers and workstations.",
+          "Developed applications for public management using Laravel, Symfony, and Go. Managed servers and implemented automation scripts to optimize city hall operations.",
       },
       {
         position: "Full Stack Developer",
         company: "WEMIND GROUP",
         period: "2024 - 2025",
         description:
-          "Using technologies like Symfony aligned with Twig, I build systems to help small businesses streamline and centralize their internal processes, simplifying the daily tasks of administrators and consolidating their team data into a single platform.",
+          "Built centralized management systems using Symfony and Twig, helping small businesses streamline internal processes and team data management.",
       },
       {
         position: "Speaker - Workshops",
         company: "ACADEMIC PRESENTATIONS",
         period: "2025",
         description:
-          "Whether the topic is AI, development, infrastructure (infra), or automation, delivering talks on these subjects is a strong suit. These sessions can help internal teams onboard with new technologies and work more agilely, achieving high performance.",
+          "Delivered technical workshops on AI, modern software development, and infrastructure automation for internal teams and academic audiences.",
       },
     ],
     education: [
@@ -83,46 +93,28 @@ const resumeData: Record<Language, ResumeData> = {
     projects: [
       {
         name: "School Meal Management",
-        description:
-          "Comprehensive system developed for the Department of Education to manage and control school meals distribution, inventory, and logistics.",
+        description: "Comprehensive system for managing school meal distribution and inventory logistics.",
         technologies: "Laravel, Vue.js",
-        impact:
-          "Streamlined food distribution and inventory control for the municipal education department.",
+        impact: "Optimized logistics for the municipal education department.",
       },
       {
         name: "AI Financial Manager",
-        description:
-          "Mobile application for financial management featuring AI-driven insights and spending analysis to help users make smarter financial decisions.",
+        description: "Mobile app featuring AI-driven insights and spending analysis.",
         technologies: "React Native, AI Integration",
-        impact:
-          "Improved user financial awareness through automated analysis.",
+        impact: "Enhanced financial awareness through automated analysis.",
       },
       {
         name: "Medical Regulation System",
-        description:
-          "High-performance management system for medical health system regulation, streamlining healthcare processes and patient flow.",
+        description: "High-performance system for healthcare regulation and patient flow management.",
         technologies: "Spring Boot, Vue.js",
-        impact:
-          "Increased efficiency in medical appointments and patient regulation.",
+        impact: "Reduced bottlenecks in medical scheduling.",
       },
       {
-        name: "Personal Activity Tracker",
-        description:
-          "Full-stack application designed for tracking daily activities, personal goals, and productivity monitoring.",
-        technologies: "Spring Boot, Angular",
-        impact:
-          "Helped users monitor productivity and achieve personal goals.",
-      },
-      {
-        name: "Municipal Fuel Management System",
-        description:
-          "Complete fuel management system for public fleets built with Laravel. Features fuel control with mandatory authorization, real-time analytics dashboard, vehicle management with MERCOSUL validation, role-based access control (Admin, Manager, Operator), detailed reports with CSV export, and cost control with full transparency.",
-        technologies:
-          "Laravel 12, Laravel Breeze, Tailwind CSS, Alpine.js, Chart.js, SQLite/MySQL",
-        impact:
-          "Increased transparency in public spending, strict fuel control, and cost optimization for municipal governments.",
-        link: "https://www.linkedin.com/feed/update/urn:li:activity:7356710729246224384/",
-      },
+        name: "Municipal Fuel Management",
+        description: "End-to-end management for public fleets with real-time analytics and cost control.",
+        technologies: "Laravel, Tailwind, MySQL",
+        impact: "Increased transparency and cost-saving in public spending.",
+      }
     ],
   },
   pt: {
@@ -131,33 +123,38 @@ const resumeData: Record<Language, ResumeData> = {
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
-      website: "https://gustavoanjos.com",
-      github: "https://github.com/guztaver",
-      linkedin: "https://linkedin.com/in/gustavo404",
+      website: "gustavoanjos.com",
+      github: "github.com/guztaver",
+      linkedin: "linkedin.com/in/gustavo404",
     },
     profile:
-      "Com agilidade e performance em mente, almejo sempre criar sistemas que, além de muito ágeis, facilitam a vida dos usuários que utilizam eles. Com experiência profissional & anos de estudo, posso identificar erros com agilidade e resolvê-los em tempos curtos, que podem ajudar no crescimento da empresa! E um entusiasta do mundo Linux!",
+      "Desenvolvedor Backend focado em sistemas de alta performance e arquitetura limpa. Especialista em criar soluções eficientes que simplificam processos de negócios complexos. Entusiasta Linux com forte compromisso com TDD e Clean Code.",
+    skills: {
+      backend: ["PHP (Laravel, Symfony)", "Java (Spring Boot)", "Node.js (TypeScript)", "Go", "C# (.NET)"],
+      frontend: ["React, Next.js", "Vue.js, Nuxt.js", "Angular", "Tailwind CSS"],
+      bestPractices: ["TDD", "Clean Code", "Clean Architecture", "Design Patterns", "Agile"]
+    },
     experience: [
       {
         position: "Analista de Suporte e Desenvolvimento",
         company: "PREFEITURA DE PAU BRASIL",
         period: "2025 - ATUAL",
         description:
-          "Aliado às ferramentas de desenvolvimento (Laravel, Symfony, Golang, C#), identifiquei problemas estruturais na prefeitura, e desenvolvi aplicativos para ajudar a gerir, controlar e facilitar a gestão pública através de software! Além de dar manutenção em servidores e workstations.",
+          "Desenvolvimento de aplicações para gestão pública com Laravel, Symfony e Go. Manutenção de servidores e criação de scripts de automação.",
       },
       {
         position: "Desenvolvedor Full Stack",
         company: "WEMIND GROUP",
         period: "2024 - 2025",
         description:
-          "Com tecnologias como Symfony alinhadas ao Twig, construo sistemas para que empresas pequenas possam agilizar e centralizar os seus processos internos, facilitando a vida dos administradores e centralizando os dados das suas equipes em uma única plataforma.",
+          "Construção de sistemas de gestão centralizados com Symfony e Twig, auxiliando pequenas empresas a otimizar processos internos.",
       },
       {
         position: "Palestrante",
-        company: "DIVERSAS PALESTRAS ACADÊMICAS",
+        company: "PALESTRAS ACADÊMICAS",
         period: "2025",
         description:
-          "Seja o assunto IAs, desenvolvimento, infra ou automação, palestras desses assuntos são um forte, podendo ajudar equipes internas a se introduzirem com uma nova tecnologia e trabalhar de forma mais ágil e com ótima performance.",
+          "Ministrei workshops técnicos sobre IA, desenvolvimento moderno de software e automação de infraestrutura.",
       },
     ],
     education: [
@@ -167,7 +164,7 @@ const resumeData: Record<Language, ResumeData> = {
         period: "2023 - 2027",
       },
       {
-        degree: "Desenvolvimento de Aplicativos Mobile - Nativo",
+        degree: "Desenvolvimento Mobile Nativo",
         institution: "SENAC",
         period: "2020 - 2020",
       },
@@ -175,46 +172,28 @@ const resumeData: Record<Language, ResumeData> = {
     projects: [
       {
         name: "Gestão de Merendas Escolares",
-        description:
-          "Sistema abrangente desenvolvido para a Secretaria de Educação para gerir e controlar a distribuição, estoque e logística de merendas escolares.",
+        description: "Sistema abrangente para gestão de distribuição e logística de merenda escolar.",
         technologies: "Laravel, Vue.js",
-        impact:
-          "Otimizou a distribuição de alimentos e controle de estoque para a secretaria de educação municipal.",
+        impact: "Otimizou a logística da secretaria de educação municipal.",
       },
       {
         name: "Gestão Financeira com IA",
-        description:
-          "Aplicativo mobile de gestão financeira com insights e análises geridas por Inteligência Artificial para ajudar usuários a tomar decisões financeiras mais inteligentes.",
-        technologies: "React Native, IA Integration",
-        impact:
-          "Melhorou a consciência financeira dos usuários através de análises automatizadas.",
+        description: "App mobile com insights gerados por IA e análise de gastos.",
+        technologies: "React Native, Integração IA",
+        impact: "Melhorou a consciência financeira através de análise automatizada.",
       },
       {
         name: "Sistema de Regulação Médica",
-        description:
-          "Sistema de gestão de alta performance para regulação do sistema de saúde médica, otimizando processos e fluxos de atendimento.",
+        description: "Sistema de alta performance para regulação de saúde e fluxo de pacientes.",
         technologies: "Spring Boot, Vue.js",
-        impact:
-          "Aumentou a eficiência nas marcações e regulação de pacientes.",
+        impact: "Reduziu gargalos no agendamento médico.",
       },
       {
-        name: "Tracking de Atividades Pessoais",
-        description:
-          "Aplicação full-stack projetada para acompanhamento de atividades diárias, metas pessoais e monitoramento de produtividade.",
-        technologies: "Spring Boot, Angular",
-        impact:
-          "Ajudou usuários a monitorar produtividade e alcançar metas pessoais.",
-      },
-      {
-        name: "Sistema de Gerenciamento de Combustível Municipal",
-        description:
-          "Sistema completo de gerenciamento de combustível para frotas públicas desenvolvido em Laravel. Oferece controle total de abastecimentos com autorização obrigatória, dashboard analytics com gráficos em tempo real, gestão de veículos com validação MERCOSUL, sistema de roles (Admin, Gerente, Operador), relatórios detalhados e exportação CSV, e controle de custos com transparência total.",
-        technologies:
-          "Laravel 12, Laravel Breeze, Tailwind CSS, Alpine.js, Chart.js, SQLite/MySQL",
-        impact:
-          "Maior transparência nos gastos públicos, controle rigoroso de combustível e otimização de custos para prefeituras.",
-        link: "https://www.linkedin.com/feed/update/urn:li:activity:7356710729246224384/",
-      },
+        name: "Gestão de Combustível Municipal",
+        description: "Gestão ponta-a-ponta de frotas públicas com analytics e controle de custos.",
+        technologies: "Laravel, Tailwind, MySQL",
+        impact: "Aumentou a transparência e economia no gasto público.",
+      }
     ],
   },
 };
@@ -222,220 +201,204 @@ const resumeData: Record<Language, ResumeData> = {
 export const generateResumePDF = async (language: Language): Promise<void> => {
   const data = resumeData[language];
   const doc = new jsPDF();
+  
+  const primaryColor = [44, 62, 80];
+  const accentColor = [52, 152, 219];
+  const textColor = [52, 73, 94];
+  const sidebarColor = [245, 247, 249];
 
-  // Set font
-  doc.setFont("helvetica");
+  // Sidebar background
+  doc.setFillColor(sidebarColor[0], sidebarColor[1], sidebarColor[2]);
+  doc.rect(0, 0, 70, 297, "F");
 
-  // Colors are defined inline where used
-
-  // Header
-  doc.setFillColor(44, 62, 80); // primaryColor
-  doc.rect(0, 0, 210, 40, "F");
+  // Header background
+  doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.rect(70, 0, 140, 40, "F");
 
   // Photo
   try {
-    const imgData = "/guztaver-photo.jpg";
-    doc.addImage(imgData, "JPEG", 170, 5, 30, 30);
+    // Add a circular placeholder or shadow effect
+    doc.setFillColor(255, 255, 255);
+    doc.circle(35, 35, 22, "F");
+    doc.addImage("/guztaver-photo.jpg", "JPEG", 15, 15, 40, 40);
   } catch (error) {
-    console.error("Could not add image to PDF:", error);
+    console.error("Could not add image:", error);
   }
 
-  // Name
+  // Name & Title
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
   doc.setFont("helvetica", "bold");
-  doc.text(data.name, 20, 20);
-
-  // Title
-  doc.setFontSize(16);
+  doc.setFontSize(22);
+  doc.text(data.name, 75, 20);
+  
   doc.setFont("helvetica", "normal");
-  doc.text(data.title, 20, 32);
+  doc.setFontSize(14);
+  doc.text(data.title, 75, 30);
 
-  // Contact Information
-  doc.setTextColor(52, 73, 94); // textColor
-  doc.setFontSize(10);
-  const contactInfo = [
+  // --- LEFT COLUMN (Sidebar) ---
+  let leftY = 70;
+  
+  // Contact
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "pt" ? "CONTATO" : "CONTACT", 15, leftY);
+  leftY += 8;
+  
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+  const contacts = [
     data.contact.phone,
     data.contact.email,
     data.contact.website,
     data.contact.github,
-    data.contact.linkedin,
+    data.contact.linkedin
   ];
+  contacts.forEach(c => {
+    doc.text(c, 15, leftY);
+    leftY += 5;
+  });
+  leftY += 10;
 
-  let yPos = 50;
-  contactInfo.forEach((info, index) => {
-    doc.text(info, 20, yPos + index * 5);
+  // Skills
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "pt" ? "HABILIDADES" : "SKILLS", 15, leftY);
+  leftY += 8;
+
+  const renderSkillGroup = (title: string, skills: string[]) => {
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
+    doc.text(title, 15, leftY);
+    leftY += 5;
+    
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+    skills.forEach(s => {
+      doc.text("• " + s, 18, leftY);
+      leftY += 4.5;
+    });
+    leftY += 4;
+  };
+
+  renderSkillGroup("Backend", data.skills.backend);
+  renderSkillGroup("Frontend", data.skills.frontend);
+  renderSkillGroup(language === "pt" ? "Boas Práticas" : "Best Practices", data.skills.bestPractices);
+
+  // Education
+  doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "pt" ? "FORMAÇÃO" : "EDUCATION", 15, leftY);
+  leftY += 8;
+
+  data.education.forEach(edu => {
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+    const eduLines = doc.splitTextToSize(edu.degree, 45);
+    doc.text(eduLines, 15, leftY);
+    leftY += (eduLines.length * 4);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.text(edu.period, 15, leftY);
+    leftY += 4;
+    const instLines = doc.splitTextToSize(edu.institution, 45);
+    doc.text(instLines, 15, leftY);
+    leftY += (instLines.length * 4) + 2;
   });
 
-  yPos += contactInfo.length * 5 + 10;
+  // --- RIGHT COLUMN ---
+  let rightY = 55;
 
-  // Profile Section
-  const profileTitle = language === "pt" ? "OBJETIVOS" : "PROFESSIONAL PROFILE";
+  // Profile
+  doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(52, 152, 219); // accentColor
-  doc.text(profileTitle, 20, yPos);
+  doc.text(language === "pt" ? "PERFIL" : "PROFILE", 75, rightY);
+  rightY += 2;
+  doc.setDrawColor(accentColor[0], accentColor[1], accentColor[2]);
+  doc.line(75, rightY, 200, rightY);
+  rightY += 8;
 
-  yPos += 8;
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(52, 73, 94); // textColor
+  doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+  const profileLines = doc.splitTextToSize(data.profile, 120);
+  doc.text(profileLines, 75, rightY);
+  rightY += (profileLines.length * 5) + 10;
 
-  // Split profile text to fit page width
-  const profileLines = doc.splitTextToSize(data.profile, 170);
-  doc.text(profileLines, 20, yPos);
-  yPos += profileLines.length * 5 + 10;
-
-  // Experience Section
-  const experienceTitle =
-    language === "pt" ? "EXPERIÊNCIAS" : "WORK EXPERIENCE";
+  // Experience
+  doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(52, 152, 219); // accentColor
-  doc.text(experienceTitle, 20, yPos);
-  yPos += 10;
+  doc.text(language === "pt" ? "EXPERIÊNCIA" : "EXPERIENCE", 75, rightY);
+  rightY += 2;
+  doc.line(75, rightY, 200, rightY);
+  rightY += 8;
 
-  data.experience.forEach((exp) => {
-    // Check if we need a new page
-    if (yPos > 250) {
-      doc.addPage();
-      yPos = 20;
-    }
-
-    // Position and Company
-    doc.setFontSize(12);
+  data.experience.forEach(exp => {
+    doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(44, 62, 80); // primaryColor
-    doc.text(exp.position, 20, yPos);
-
-    // Period
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 152, 219); // accentColor
-    doc.text(exp.period, 20, yPos + 6);
-
-    // Company
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(44, 62, 80); // primaryColor
-    doc.text(exp.company, 20, yPos + 12);
-
-    yPos += 18;
-
-    // Description
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text(exp.position, 75, rightY);
+    
     doc.setFontSize(10);
+    doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
+    doc.text(exp.period, 160, rightY);
+    rightY += 5;
+    
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+    doc.text(exp.company, 75, rightY);
+    rightY += 5;
+    
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 73, 94); // textColor
-    const descLines = doc.splitTextToSize(exp.description, 170);
-    doc.text(descLines, 20, yPos);
-    yPos += descLines.length * 5 + 10;
+    doc.setFontSize(9);
+    const descLines = doc.splitTextToSize(exp.description, 120);
+    doc.text(descLines, 75, rightY);
+    rightY += (descLines.length * 4.5) + 8;
   });
 
-  // Education Section
-  const educationTitle = language === "pt" ? "FORMAÇÃO" : "ACADEMIC EDUCATION";
-
-  // Check if we need a new page
-  if (yPos > 220) {
-    doc.addPage();
-    yPos = 20;
-  }
-
+  // Projects
+  doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(52, 152, 219); // accentColor
-  doc.text(educationTitle, 20, yPos);
-  yPos += 10;
+  doc.text(language === "pt" ? "PROJETOS" : "PROJECTS", 75, rightY);
+  rightY += 2;
+  doc.line(75, rightY, 200, rightY);
+  rightY += 8;
 
-  data.education.forEach((edu) => {
-    // Check if we need a new page
-    if (yPos > 250) {
+  data.projects.forEach(proj => {
+    if (rightY > 270) {
       doc.addPage();
-      yPos = 20;
+      rightY = 20;
     }
-
-    // Degree
-    doc.setFontSize(12);
+    doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(44, 62, 80); // primaryColor
-    doc.text(edu.degree, 20, yPos);
-
-    // Period
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text(proj.name, 75, rightY);
+    rightY += 5;
+    
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "italic");
+    doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);
+    doc.text(proj.technologies, 75, rightY);
+    rightY += 4;
+    
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 152, 219); // accentColor
-    doc.text(edu.period, 20, yPos + 6);
-
-    // Institution
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(44, 62, 80); // primaryColor
-    doc.text(edu.institution, 20, yPos + 12);
-
-    yPos += 20;
+    doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+    const projLines = doc.splitTextToSize(proj.description, 120);
+    doc.text(projLines, 75, rightY);
+    rightY += (projLines.length * 4.5) + 6;
   });
 
-  // Projects Section
-  const projectsTitle = language === "pt" ? "PROJETOS" : "KEY PROJECTS";
-
-  // Check if we need a new page
-  if (yPos > 200) {
-    doc.addPage();
-    yPos = 20;
-  }
-
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(52, 152, 219); // accentColor
-  doc.text(projectsTitle, 20, yPos);
-  yPos += 10;
-
-  data.projects.forEach((project) => {
-    // Check if we need a new page
-    if (yPos > 220) {
-      doc.addPage();
-      yPos = 20;
-    }
-
-    // Project Name
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(44, 62, 80); // primaryColor
-    doc.text(project.name, 20, yPos);
-    yPos += 8;
-
-    // Description
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 73, 94); // textColor
-    const descLines = doc.splitTextToSize(project.description, 170);
-    doc.text(descLines, 20, yPos);
-    yPos += descLines.length * 5 + 5;
-
-    // Technologies
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(52, 152, 219); // accentColor
-    const techLabel = language === "pt" ? "Tecnologias: " : "Technologies: ";
-    doc.text(techLabel, 20, yPos);
-    yPos += 6;
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 73, 94); // textColor
-    const techLines = doc.splitTextToSize(project.technologies, 170);
-    doc.text(techLines, 20, yPos);
-    yPos += techLines.length * 5 + 5;
-
-    // Impact
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(52, 152, 219); // accentColor
-    const impactLabel = language === "pt" ? "Impacto: " : "Impact: ";
-    doc.text(impactLabel, 20, yPos);
-    yPos += 6;
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(52, 73, 94); // textColor
-    const impactLines = doc.splitTextToSize(project.impact, 170);
-    doc.text(impactLines, 20, yPos);
-    yPos += impactLines.length * 5 + 15;
-  });
-
-  // Download the PDF
-  const filename =
-    language === "pt"
-      ? "Gustavo_Muniz_Curriculo.pdf"
-      : "Gustavo_Muniz_Resume.pdf";
+  // Download
+  const filename = language === "pt" ? "Gustavo_Muniz_Curriculo.pdf" : "Gustavo_Muniz_Resume.pdf";
   doc.save(filename);
 };
