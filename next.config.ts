@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
+  // Turbopack configuration
+  turbopack: {},
+
   // Bundle optimization
   webpack: (config, { dev, isServer }) => {
     // Optimize bundle size
