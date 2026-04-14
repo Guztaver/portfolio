@@ -40,7 +40,7 @@ interface ResumeData {
 const resumeData: Record<Language, ResumeData> = {
   en: {
     name: "GUSTAVO MUNIZ",
-    title: "Backend Developer",
+    title: "Full Stack Developer",
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
@@ -49,7 +49,7 @@ const resumeData: Record<Language, ResumeData> = {
       linkedin: "linkedin.com/in/gustavo404",
     },
     profile:
-      "Backend developer focused on high-performance systems and clean architecture. Expert in creating efficient solutions that simplify complex business processes. Linux enthusiast with a strong commitment to best practices like TDD and Clean Code.",
+      "Full Stack developer focused on high-performance systems and clean architecture. Expert in creating efficient solutions that simplify complex business processes. Linux enthusiast with a strong commitment to best practices like TDD and Clean Code.",
     skills: {
       backend: ["PHP (Laravel, Symfony)", "Java (Spring Boot)", "Node.js (TypeScript)", "Go", "C# (.NET)"],
       frontend: ["React, Next.js", "Vue.js, Nuxt.js", "Angular", "Tailwind CSS"],
@@ -119,7 +119,7 @@ const resumeData: Record<Language, ResumeData> = {
   },
   pt: {
     name: "GUSTAVO MUNIZ",
-    title: "Desenvolvedor Backend",
+    title: "Desenvolvedor Full Stack",
     contact: {
       phone: "(73) 981155999",
       email: "contact@gustavoanjos.com",
@@ -128,7 +128,7 @@ const resumeData: Record<Language, ResumeData> = {
       linkedin: "linkedin.com/in/gustavo404",
     },
     profile:
-      "Desenvolvedor Backend focado em sistemas de alta performance e arquitetura limpa. Especialista em criar soluções eficientes que simplificam processos de negócios complexos. Entusiasta Linux com forte compromisso com TDD e Clean Code.",
+      "Desenvolvedor Full Stack focado em sistemas de alta performance e arquitetura limpa. Especialista em criar soluções eficientes que simplificam processos de negócios complexos. Entusiasta Linux com forte compromisso com TDD e Clean Code.",
     skills: {
       backend: ["PHP (Laravel, Symfony)", "Java (Spring Boot)", "Node.js (TypeScript)", "Go", "C# (.NET)"],
       frontend: ["React, Next.js", "Vue.js, Nuxt.js", "Angular", "Tailwind CSS"],

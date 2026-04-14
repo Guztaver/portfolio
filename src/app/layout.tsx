@@ -12,10 +12,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Gustavo Muniz - Terminal Portfolio",
   description:
-    "Backend Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio showcasing skills, experience, and projects",
+    "Full Stack Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio showcasing skills, experience, and projects",
   keywords: [
     "Gustavo Muniz",
-    "Backend Developer",
+    "Full Stack Developer",
     "Portfolio",
     "Terminal",
     "Linux",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: "https://gustavoanjos.com",
     title: "Gustavo Muniz - Terminal Portfolio",
     description:
-      "Backend Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio",
+      "Full Stack Developer | Linux Enthusiast | Problem Solver - Interactive terminal portfolio",
     siteName: "Gustavo Muniz Portfolio",
     images: [
       {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gustavo Muniz - Terminal Portfolio",
-    description: "Backend Developer | Linux Enthusiast | Problem Solver",
+    description: "Full Stack Developer | Linux Enthusiast | Problem Solver",
     creator: "@gustavo404",
     images: ["/og-image.png"],
   },

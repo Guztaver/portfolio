@@ -59,7 +59,7 @@
   <text x="120" y="200" fill="#cccccc"
         font-family="monospace" font-size="12">gustavo</text>
   <text x="120" y="216" fill="#888888"
-        font-family="monospace" font-size="10">Backend Developer</text>
+        font-family="monospace" font-size="10">Full Stack Developer</text>
 
   <!-- Second prompt -->
   <text x="120" y="240" fill="#00ff00"

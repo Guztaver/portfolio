@@ -153,7 +153,7 @@ export const translations: Translations = {
       "skills-content": {
         title: "⚡ TECHNICAL SKILLS",
         content: [
-          "<span style='color: #00ff00'>Backend Development:</span>",
+          "<span style='color: #00ff00'>Full Stack Development:</span>",
           "  • PHP (Laravel, Symfony)",
           "  • Java (Spring Boot)",
           "  • Node.js & TypeScript",
@@ -360,9 +360,9 @@ export const translations: Translations = {
         ],
       },
       "about-content": {
-        title: "👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Backend",
+        title: "👨‍💻 GUSTAVO MUNIZ - Desenvolvedor Full Stack",
         content: [
-          "Desenvolvedor Backend focado em sistemas de alta performance e arquitetura limpa. Especialista no ecossistema Java (Spring Boot) e Angular, busco criar soluções eficientes que simplificam processos complexos. Entusiasta Linux com forte compromisso com TDD e Clean Code.",
+          "Desenvolvedor Full Stack focado em sistemas de alta performance e arquitetura limpa. Especialista no ecossistema Java (Spring Boot) e Angular, busco criar soluções eficientes que simplificam processos complexos. Entusiasta Linux com forte compromisso com TDD e Clean Code.",
           "",
           "<span style='color: #00ff00'>🎯 Especializações:</span>",
           "  • Backend: Java (Spring Boot), PHP (Laravel/Symfony), Go",
@@ -416,7 +416,7 @@ export const translations: Translations = {
       "skills-content": {
         title: "⚡ HABILIDADES TÉCNICAS",
         content: [
-          "<span style='color: #00ff00'>Desenvolvimento Backend:</span>",
+          "<span style='color: #00ff00'>Desenvolvimento Full Stack:</span>",
           "  • PHP (Laravel, Symfony)",
           "  • Java (Spring Boot)",
           "  • Node.js & TypeScript",
